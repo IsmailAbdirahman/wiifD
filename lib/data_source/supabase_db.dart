@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/profile_settings.dart';
+import 'package:wiifd/main.dart';
 import 'package:wiifd/utilties/app_config.dart';
 
 final supabaseProvider = Provider((ref) => SupabaseDB());
 
 class SupabaseDB {
   //------ USer Profile -----------
-  Future<bool> saveUserInfo() async {
+
+  saveUserInfo() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     String userUID = auth.currentUser!.uid;
     String? name = auth.currentUser!.displayName;
@@ -15,16 +17,18 @@ class SupabaseDB {
     final res = await client
         .from('user_info')
         .insert({'userUID': userUID, 'name': name, 'email': email}).execute();
-    if (res.error != null) {
-      return false;
-    } else {
-      loadProfileInfo();
-      return true;
-    }
+    if (res.error != null) {}
   }
 
   updateName(String name) async {
-    final res = await client.from('user_info').update({'name': name}).execute();
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String userUID = auth.currentUser!.uid;
+
+    final res = await client
+        .from('user_info')
+        .update({'name': name})
+        .eq("userUID", userUID)
+        .execute();
     if (res.error != null) {
       print("Something went wrong");
     }
@@ -32,11 +36,20 @@ class SupabaseDB {
   }
 
   Future<ProfileSettings> loadProfileInfo() async {
-    final res = await client.from('user_info').select().execute();
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String userUID = auth.currentUser!.uid;
+    final res = await client
+        .from('user_info')
+        .select()
+        .eq("userUID", userUID)
+        .execute();
     if (res.error != null) {
       throw ("something went wrong");
     }
-    return res.data;
+    List<dynamic> dynamicData = res.data;
+    List<ProfileSettings> data =
+        dynamicData.map((e) => ProfileSettings.fromJson(e)).toList();
+    return data[0];
   }
 
 // ---------- To do Info ----------------

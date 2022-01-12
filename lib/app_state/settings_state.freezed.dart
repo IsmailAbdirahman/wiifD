@@ -18,8 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$SettingsStateTearOff {
   const _$SettingsStateTearOff();
 
-  _NoError noError() {
-    return const _NoError();
+  _initializing initializing() {
+    return const _initializing();
   }
 
   _Error error(String errorMessage) {
@@ -28,8 +28,10 @@ class _$SettingsStateTearOff {
     );
   }
 
-  _Loading loading() {
-    return const _Loading();
+  _Loaded loaded(ProfileSettings data) {
+    return _Loaded(
+      data,
+    );
   }
 }
 
@@ -40,45 +42,45 @@ const $SettingsState = _$SettingsStateTearOff();
 mixin _$SettingsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noError,
+    required TResult Function() initializing,
     required TResult Function(String errorMessage) error,
-    required TResult Function() loading,
+    required TResult Function(ProfileSettings data) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NoError value) noError,
+    required TResult Function(_initializing value) initializing,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -102,35 +104,38 @@ class _$SettingsStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$NoErrorCopyWith<$Res> {
-  factory _$NoErrorCopyWith(_NoError value, $Res Function(_NoError) then) =
-      __$NoErrorCopyWithImpl<$Res>;
+abstract class _$initializingCopyWith<$Res> {
+  factory _$initializingCopyWith(
+          _initializing value, $Res Function(_initializing) then) =
+      __$initializingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$NoErrorCopyWithImpl<$Res> extends _$SettingsStateCopyWithImpl<$Res>
-    implements _$NoErrorCopyWith<$Res> {
-  __$NoErrorCopyWithImpl(_NoError _value, $Res Function(_NoError) _then)
-      : super(_value, (v) => _then(v as _NoError));
+class __$initializingCopyWithImpl<$Res>
+    extends _$SettingsStateCopyWithImpl<$Res>
+    implements _$initializingCopyWith<$Res> {
+  __$initializingCopyWithImpl(
+      _initializing _value, $Res Function(_initializing) _then)
+      : super(_value, (v) => _then(v as _initializing));
 
   @override
-  _NoError get _value => super._value as _NoError;
+  _initializing get _value => super._value as _initializing;
 }
 
 /// @nodoc
 
-class _$_NoError implements _NoError {
-  const _$_NoError();
+class _$_initializing implements _initializing {
+  const _$_initializing();
 
   @override
   String toString() {
-    return 'SettingsState.noError()';
+    return 'SettingsState.initializing()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _NoError);
+        (other.runtimeType == runtimeType && other is _initializing);
   }
 
   @override
@@ -139,33 +144,33 @@ class _$_NoError implements _NoError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noError,
+    required TResult Function() initializing,
     required TResult Function(String errorMessage) error,
-    required TResult Function() loading,
+    required TResult Function(ProfileSettings data) loaded,
   }) {
-    return noError();
+    return initializing();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
   }) {
-    return noError?.call();
+    return initializing?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
     required TResult orElse(),
   }) {
-    if (noError != null) {
-      return noError();
+    if (initializing != null) {
+      return initializing();
     }
     return orElse();
   }
@@ -173,40 +178,40 @@ class _$_NoError implements _NoError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NoError value) noError,
+    required TResult Function(_initializing value) initializing,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
   }) {
-    return noError(this);
+    return initializing(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
   }) {
-    return noError?.call(this);
+    return initializing?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
-    if (noError != null) {
-      return noError(this);
+    if (initializing != null) {
+      return initializing(this);
     }
     return orElse();
   }
 }
 
-abstract class _NoError implements SettingsState {
-  const factory _NoError() = _$_NoError;
+abstract class _initializing implements SettingsState {
+  const factory _initializing() = _$_initializing;
 }
 
 /// @nodoc
@@ -272,9 +277,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noError,
+    required TResult Function() initializing,
     required TResult Function(String errorMessage) error,
-    required TResult Function() loading,
+    required TResult Function(ProfileSettings data) loaded,
   }) {
     return error(errorMessage);
   }
@@ -282,9 +287,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
   }) {
     return error?.call(errorMessage);
   }
@@ -292,9 +297,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -306,9 +311,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NoError value) noError,
+    required TResult Function(_initializing value) initializing,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
   }) {
     return error(this);
   }
@@ -316,9 +321,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
   }) {
     return error?.call(this);
   }
@@ -326,9 +331,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -347,70 +352,94 @@ abstract class _Error implements SettingsState {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$LoadedCopyWith<$Res> {
+  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
+      __$LoadedCopyWithImpl<$Res>;
+  $Res call({ProfileSettings data});
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$SettingsStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$LoadedCopyWithImpl<$Res> extends _$SettingsStateCopyWithImpl<$Res>
+    implements _$LoadedCopyWith<$Res> {
+  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
+      : super(_value, (v) => _then(v as _Loaded));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _Loaded get _value => super._value as _Loaded;
+
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_Loaded(
+      data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as ProfileSettings,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Loading implements _Loading {
-  const _$_Loading();
+class _$_Loaded implements _Loaded {
+  const _$_Loaded(this.data);
+
+  @override
+  final ProfileSettings data;
 
   @override
   String toString() {
-    return 'SettingsState.loading()';
+    return 'SettingsState.loaded(data: $data)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Loading);
+        (other.runtimeType == runtimeType &&
+            other is _Loaded &&
+            const DeepCollectionEquality().equals(other.data, data));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+
+  @JsonKey(ignore: true)
+  @override
+  _$LoadedCopyWith<_Loaded> get copyWith =>
+      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() noError,
+    required TResult Function() initializing,
     required TResult Function(String errorMessage) error,
-    required TResult Function() loading,
+    required TResult Function(ProfileSettings data) loaded,
   }) {
-    return loading();
+    return loaded(data);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
   }) {
-    return loading?.call();
+    return loaded?.call(data);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? noError,
+    TResult Function()? initializing,
     TResult Function(String errorMessage)? error,
-    TResult Function()? loading,
+    TResult Function(ProfileSettings data)? loaded,
     required TResult orElse(),
   }) {
-    if (loading != null) {
-      return loading();
+    if (loaded != null) {
+      return loaded(data);
     }
     return orElse();
   }
@@ -418,38 +447,42 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_NoError value) noError,
+    required TResult Function(_initializing value) initializing,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loading value) loading,
+    required TResult Function(_Loaded value) loaded,
   }) {
-    return loading(this);
+    return loaded(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
   }) {
-    return loading?.call(this);
+    return loaded?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_NoError value)? noError,
+    TResult Function(_initializing value)? initializing,
     TResult Function(_Error value)? error,
-    TResult Function(_Loading value)? loading,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
-    if (loading != null) {
-      return loading(this);
+    if (loaded != null) {
+      return loaded(this);
     }
     return orElse();
   }
 }
 
-abstract class _Loading implements SettingsState {
-  const factory _Loading() = _$_Loading;
+abstract class _Loaded implements SettingsState {
+  const factory _Loaded(ProfileSettings data) = _$_Loaded;
+
+  ProfileSettings get data;
+  @JsonKey(ignore: true)
+  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
 }

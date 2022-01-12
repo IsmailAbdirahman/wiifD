@@ -1,11 +1,17 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/i10n.dart';
+import 'package:logger/logger.dart';
+import 'package:wiifd/app_state/settings_state.dart';
+import 'package:wiifd/widgets/button_nav.dart';
 import 'screens/settings/settings.dart';
 import 'screens/sign_in_screen.dart';
 import 'firebase_options.dart';
+var logger = Logger();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +45,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: SettingsScreen(),
+      home: LoginScreen(),
     );
   }
 }

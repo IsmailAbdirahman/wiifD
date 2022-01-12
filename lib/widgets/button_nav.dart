@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
+import 'package:wiifd/screens/settings/settings.dart';
 import 'package:wiifd/screens/todo_info.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 import 'package:date_format/date_format.dart';
@@ -44,12 +45,9 @@ class _ButtonNavWidgetState extends State<ButtonNavWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     TodoInfoScreen(),
-    Text(
-      'Settings',
-      style: optionStyle,
-    ),
+    SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {

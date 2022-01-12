@@ -1,44 +1,43 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
+import 'package:wiifd/screens/settings/settings.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 import 'package:wiifd/utilties/app_config.dart';
 import 'package:wiifd/widgets/todo_info_tile.dart';
 
-class TodoInfoScreen extends StatefulWidget {
-  const TodoInfoScreen({Key? key}) : super(key: key);
-
+class TodoInfoScreen extends ConsumerWidget {
   @override
-  _TodoInfoScreenState createState() => _TodoInfoScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(settingsProvider);
 
-class _TodoInfoScreenState extends State<TodoInfoScreen> {
-  @override
-  Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
         final heightC = constraints.biggest.height;
-        final widthC = constraints.biggest.width;
         return Scaffold(
             backgroundColor: Colors.white,
             appBar: AppBar(
               backgroundColor: AppColor().backgroundColor,
               elevation: 0,
               title: ListTile(
-                title: Padding(
-                  padding: const EdgeInsets.only(left: 5.0),
-                  child: Text(
-                    "Hello,",
-                    style: TextStyle(color: AppColor().primaryColor),
-                  ),
+                title: Text(
+                  "Hello,",
+                  style: TextStyle(color: AppColor().primaryColor),
                 ),
-                subtitle: Text(
-                  "$userUID",
-                  style: TextStyle(
-                      fontSize: 17,
-                      fontWeight: FontWeight.w800,
-                      color: AppColor().primaryColor),
+                subtitle: state.when(
+                  initializing: () => Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  error: (e) {},
+                  loaded: (data) => Text(
+                    "${data.name}",
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w800,
+                        color: AppColor().primaryColor),
+                  ),
                 ),
               ),
               actions: [

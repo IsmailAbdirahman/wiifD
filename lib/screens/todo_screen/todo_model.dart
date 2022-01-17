@@ -3,27 +3,37 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/app_state/todo_state.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
-import 'package:wiifd/screens/settings/settings_model.dart';
 import '../../main.dart';
 
 final todoProvider = StateNotifierProvider<TodoModel, TodoState>((ref) {
   final dataStore = ref.watch(supabaseProvider);
-
   return TodoModel(supabaseDB: dataStore);
+});
+
+final todoFuture = FutureProvider.autoDispose((ref) async {
+  final data = await ref.watch(todoProvider.notifier).loadTodoInfo();
+  return data;
 });
 
 //--
 class TodoModel extends StateNotifier<TodoState> {
-  TodoModel({required this.supabaseDB}) : super(TodoState.loading());
+  TodoModel({required this.supabaseDB}) : super(TodoState.loading()) {
+    loadTodoInfo();
+  }
 
   final SupabaseDB supabaseDB;
 
+  Future<bool> addTodo({String? title, String? description}) async {
+    state = TodoState.error("Title can't be empty");
 
-
-  addTodo({String? title, String? description}) async {
-   final info =  await supabaseDB.loadProfileInfo();
+    if (title == '') {
+      state = TodoState.error("Title can't be empty");
+      return false;
+    }
+    final info = await supabaseDB.loadProfileInfo();
     if (info.availableCoins! < 10) {
-      throw ("can't post todo");
+      state = TodoState.error("can't post todo Please pay coins");
+      throw ("can't post todo Please pay coins");
     }
     int coinForThisTodo = 10;
     int remainingCoins = info.availableCoins! - coinForThisTodo;
@@ -39,24 +49,24 @@ class TodoModel extends StateNotifier<TodoState> {
         id: uuid.v1(),
         title: title,
         description: description,
-        coins: coinForThisTodo,
+        availableCoins: coinForThisTodo,
         notifyTime: notifyTime,
         createdAt: createdAt,
         deleteAt: deleteAt);
-    if (todoInfo.title == null) {
-      state = TodoState.error("Title can't be empty");
-      return false;
-    }
+
     try {
       final data = todoInfo;
       state = TodoState.loading();
       await supabaseDB.addTodoInfo(data);
       supabaseDB.updateCoins(remainingCoins);
+      return true;
     } catch (e) {
       throw (e);
     }
   }
-}
 
-//TODO: Update automatically the remaining coins, after inserting data to todo table.
-//TODO: Try to understand how state works. it related to future.provider this one ['userInfoAsync']
+  Future<List<TodoInfo>> loadTodoInfo() async {
+    final data = await supabaseDB.loadTodoData();
+    return data;
+  }
+}

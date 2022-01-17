@@ -10,7 +10,7 @@ class TodoInfoScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingP = ref.watch(settingsProvider);
-   // final nameState = ref.watch(userInfoAsync);
+    final todoDataa = ref.watch(todoFuture);
 
     return LayoutBuilder(
       builder: (_, constraints) {
@@ -34,7 +34,10 @@ class TodoInfoScreen extends ConsumerWidget {
                           color: AppColor().primaryColor),
                     ),
                     initializing: () {},
-                    error: (e,) => Text('Error: $e'),
+                    error: (
+                      e,
+                    ) =>
+                        Text('Error: $e'),
                   )),
               actions: [
                 Padding(
@@ -55,8 +58,11 @@ class TodoInfoScreen extends ConsumerWidget {
                                       fontWeight: FontWeight.w600,
                                       fontSize: 12),
                                 ),
-                            error: (e,) => Text('Error: $e'),
-                            initializing:  () => Center(child: Text("wait..."))),
+                            error: (
+                              e,
+                            ) =>
+                                Text('Error: $e'),
+                            initializing: () => Center(child: Text("wait..."))),
                         Text(
                           "Coins",
                           style: TextStyle(
@@ -80,13 +86,18 @@ class TodoInfoScreen extends ConsumerWidget {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                      itemCount: todoData.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return TodoInfoTile(
-                          todoInfo: todoData[index],
-                        );
-                      }),
+                  child: todoDataa.when(
+                      loading: () => Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                      data: (data) => ListView.builder(
+                          itemCount: data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return TodoInfoTile(
+                              todoInfo: data[index],
+                            );
+                          }),
+                      error: (e, ee) => Text("No Todos")),
                 )
               ],
             ));

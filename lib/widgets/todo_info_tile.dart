@@ -38,7 +38,7 @@ class TodoInfoTile extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       child: Center(
                         child: Text(
-                          "${todoInfo!.coins} Coins",
+                          "${todoInfo!.availableCoins} Coins",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 13),

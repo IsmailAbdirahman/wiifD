@@ -123,6 +123,9 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
   }
 
   showTodoDialog() {
+    final kaaaa = ref.watch(todoProvider);
+    logger.e(kaaaa);
+
     return showDialog(
         barrierDismissible: false,
         context: context,
@@ -155,7 +158,11 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("When to remind?"),
+                      kaaaa.when(
+                        loading: () => Text("Can't be empty"),
+                        error: (d) => Text("Can't be empty"),
+                        data: (d) => Text("When to remind?"),
+                      ),
                       Container(
                           height: MediaQuery.of(context).size.height * 0.05,
                           width: MediaQuery.of(context).size.width * 0.8,
@@ -200,18 +207,21 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               primary: AppColor().primaryColor),
-                          onPressed: () {
-                            final state = ref
+                          onPressed: () async {
+                            final success = await ref
                                 .read(todoProvider.notifier)
                                 .addTodo(
                                     title: _titleController.text,
                                     description: _descriptionController.text);
                             print("saved");
-                            _titleController.clear();
-                            _descriptionController.clear();
-                            ref.refresh(settingsProvider);
 
-                            Navigator.pop(context);
+                            if (success) {
+                              _titleController.clear();
+                              _descriptionController.clear();
+                              ref.refresh(settingsProvider);
+                              ref.refresh(todoFuture);
+                              Navigator.pop(context);
+                            }
                           },
                           child: Text(
                             "Save",

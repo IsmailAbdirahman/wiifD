@@ -5,6 +5,7 @@ import 'package:wiifd/app_state/settings_state.dart';
 import 'package:wiifd/data_model/profile_settings.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/main.dart';
+import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_config.dart';
 
 final supabaseProvider = Provider((ref) => SupabaseDB());
@@ -27,7 +28,7 @@ class SupabaseDB {
     if (res.error != null) {}
   }
 
- Future<ProfileSettings> updateName(String name) async {
+  Future<ProfileSettings> updateName(String name) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     String userUID = auth.currentUser!.uid;
     final res = await client
@@ -39,7 +40,6 @@ class SupabaseDB {
       throw ("res.error");
     }
     return loadProfileInfo();
-
   }
 
   Future<ProfileSettings> loadProfileInfo() async {
@@ -76,13 +76,30 @@ class SupabaseDB {
       'userUID': todoInfo.userUID,
       'title': todoInfo.title,
       'description': todoInfo.description,
-      'coins': todoInfo.coins,
-      'created_at': todoInfo.createdAt,
-      'delete_at': todoInfo.deleteAt,
-      'notify_time': todoInfo.notifyTime,
+      'availableCoins': todoInfo.availableCoins,
+      'createdAt': todoInfo.createdAt,
+      'deleteAt': todoInfo.deleteAt,
+      'notifyTime': todoInfo.notifyTime,
     }).execute();
     if (res.error != null) {
       throw ("Something went wrong::: ${res.error}");
     }
+  }
+
+  Future<List<TodoInfo>> loadTodoData() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    String userUID = auth.currentUser!.uid;
+    final res = await client
+        .from('todo_info')
+        .select()
+        .eq("userUID", userUID)
+        .execute();
+    if (res.error != null) {
+      throw ("something went wrong");
+    }
+    List<dynamic> dynamicData = res.data;
+    final data = dynamicData.map((e) => TodoInfo.fromJson(e)).toList();
+    logger.e(data[0].availableCoins);
+    return data;
   }
 }

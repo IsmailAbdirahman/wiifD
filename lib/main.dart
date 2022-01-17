@@ -6,12 +6,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:logger/logger.dart';
+import 'package:uuid/uuid.dart';
 import 'package:wiifd/app_state/settings_state.dart';
+import 'package:wiifd/utilties/app_colors.dart';
 import 'package:wiifd/widgets/button_nav.dart';
 import 'screens/settings/settings.dart';
-import 'screens/sign_in_screen.dart';
+import 'screens/signing_screen/sign_in_screen.dart';
 import 'firebase_options.dart';
+
 var logger = Logger();
+var uuid = Uuid();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,9 +47,11 @@ class MyApp extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: AppColor().createMaterialColor(Color(0XFF21135D)),
       ),
       home: LoginScreen(),
     );
   }
 }
+
+//TODO: Fix loading problem for first signing

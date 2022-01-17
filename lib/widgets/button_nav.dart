@@ -1,22 +1,29 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
 import 'package:wiifd/screens/settings/settings.dart';
-import 'package:wiifd/screens/todo_info.dart';
+import 'package:wiifd/screens/todo_screen/todo_info.dart';
+import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 import 'package:date_format/date_format.dart';
+import 'package:wiifd/utilties/time_convertor.dart';
+import '../main.dart';
 import 'todo_text_input.dart';
 
-class ButtonNavWidget extends StatefulWidget {
+class ButtonNavWidget extends ConsumerStatefulWidget {
   const ButtonNavWidget({Key? key}) : super(key: key);
 
   @override
-  State<ButtonNavWidget> createState() => _ButtonNavWidgetState();
+  ConsumerState<ButtonNavWidget> createState() => _ButtonNavWidgetState();
 }
 
-class _ButtonNavWidgetState extends State<ButtonNavWidget> {
+class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
   TextEditingController _timeController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
 
   String? _time, _hours, _min;
 
@@ -133,11 +140,13 @@ class _ButtonNavWidgetState extends State<ButtonNavWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TodoTextInput(
+                        textController: _titleController,
                         hint: "Title",
                         textFieldHeight:
                             MediaQuery.of(context).size.height * 0.05,
                       ),
                       TodoTextInput(
+                        textController: _descriptionController,
                         hint: "Description",
                         textFieldHeight:
                             MediaQuery.of(context).size.height * 0.09,
@@ -191,7 +200,13 @@ class _ButtonNavWidgetState extends State<ButtonNavWidget> {
                                   borderRadius: BorderRadius.circular(10)),
                               primary: AppColor().primaryColor),
                           onPressed: () {
+                            final state = ref
+                                .watch(todoProvider.notifier)
+                                .addTodo(
+                                    title: _titleController.text,
+                                    description: _descriptionController.text);
                             print("saved");
+                            Navigator.pop(context);
                           },
                           child: Text(
                             "Save",

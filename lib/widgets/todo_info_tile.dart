@@ -60,7 +60,7 @@ class TodoInfoTile extends StatelessWidget {
                           size: 15,
                         ),
                         Text(
-                          "${todoInfo!.notificationTime}",
+                          "${todoInfo!.notifyTime.toString()}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,

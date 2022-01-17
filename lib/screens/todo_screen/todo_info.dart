@@ -1,17 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
-import 'package:wiifd/screens/settings/settings.dart';
+import 'package:wiifd/screens/settings/settings_model.dart';
+import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
-import 'package:wiifd/utilties/app_config.dart';
 import 'package:wiifd/widgets/todo_info_tile.dart';
 
 class TodoInfoScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(settingsProvider);
+    final settingP = ref.watch(settingsProvider);
+   // final nameState = ref.watch(userInfoAsync);
+   // ref.refresh(settingsProvider);
 
     return LayoutBuilder(
       builder: (_, constraints) {
@@ -22,24 +22,21 @@ class TodoInfoScreen extends ConsumerWidget {
               backgroundColor: AppColor().backgroundColor,
               elevation: 0,
               title: ListTile(
-                title: Text(
-                  "Hello,",
-                  style: TextStyle(color: AppColor().primaryColor),
-                ),
-                subtitle: state.when(
-                  initializing: () => Center(
-                    child: CircularProgressIndicator(),
+                  title: Text(
+                    "Hello,",
+                    style: TextStyle(color: AppColor().primaryColor),
                   ),
-                  error: (e) {},
-                  loaded: (data) => Text(
-                    "${data.name}",
-                    style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.w800,
-                        color: AppColor().primaryColor),
-                  ),
-                ),
-              ),
+                  subtitle: settingP.when(
+                    loaded: (data) => Text(
+                      "${data.name}",
+                      style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w800,
+                          color: AppColor().primaryColor),
+                    ),
+                    initializing: () {},
+                    error: (e,) => Text('Error: $e'),
+                  )),
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -51,13 +48,16 @@ class TodoInfoScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text(
-                          "50",
-                          style: TextStyle(
-                              color: AppColor().primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12),
-                        ),
+                        settingP.when(
+                            loaded: (data) => Text(
+                                  data.availableCoins.toString(),
+                                  style: TextStyle(
+                                      color: AppColor().primaryColor,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 12),
+                                ),
+                            error: (e,) => Text('Error: $e'),
+                            initializing:  () => Center(child: Text("wait..."))),
                         Text(
                           "Coins",
                           style: TextStyle(

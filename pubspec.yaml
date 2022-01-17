@@ -37,13 +37,16 @@ dependencies:
   flutter_riverpod: ^1.0.3
   supabase: ^0.2.10
   freezed_annotation: ^1.1.0
+  json_annotation: ^4.4.0
   logger: ^1.1.0
+  uuid: ^3.0.5
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   freezed: ^1.1.1
+  json_serializable: ^6.1.1
   build_runner: ^2.1.7
 
 

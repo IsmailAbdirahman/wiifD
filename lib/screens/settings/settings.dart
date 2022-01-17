@@ -5,13 +5,7 @@ import 'package:wiifd/data_model/profile_settings.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
 import 'package:wiifd/main.dart';
 import 'package:wiifd/screens/settings/settings_model.dart';
-
-final settingsProvider =
-    StateNotifierProvider<SettingsModel, SettingsState>((ref) {
-  final dataStore = ref.watch(supabaseProvider);
-
-  return SettingsModel(supabaseDB: dataStore);
-});
+import 'package:wiifd/utilties/app_colors.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   @override
@@ -28,16 +22,27 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(settingsProvider);
-    state.when(
-        initializing: () =>
-            nameController = TextEditingController(text: "Loading..."),
-        error: (d) => Text("Something went wrong"),
+    final settingP = ref.watch(settingsProvider);
+
+    // final stateInfo = ref.watch(userInfoAsync);
+    settingP.when(
         loaded: (data) =>
-            nameController = TextEditingController(text: data.name));
+        nameController = TextEditingController(text: data.name),
+        error: (e) => nameController = TextEditingController(text:'Name is '),
+        initializing: () => nameController = TextEditingController(text:'Wait'),);
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: AppColor().backgroundColor,
+        appBar: AppBar(
+          title: Text(
+            "Settings",
+            style: TextStyle(color: Colors.black),
+          ),
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: AppColor().backgroundColor,
+        ),
         resizeToAvoidBottomInset: true,
         body: Column(
           children: [
@@ -47,22 +52,25 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
                 onTap: () {},
                 child: TextField(
                   controller: nameController,
-                  decoration: InputDecoration(suffixIcon: Icon(Icons.edit)),
+                  decoration: InputDecoration(
+                      border: InputBorder.none, suffixIcon: Icon(Icons.edit)),
                 ),
               ),
             ),
             ElevatedButton(
+                style:
+                ElevatedButton.styleFrom(primary: AppColor().primaryColor),
                 onPressed: () async {
-                  final model = ref.watch(settingsProvider.notifier);
-                  final success = await model.updateName(
-                      ProfileSettings(name: nameController!.value.text));
+                  final model = ref.read(settingsProvider.notifier);
+                  final success =
+                  await model.updateName(nameController!.value.text);
                   if (success) {
-                    print("Saved");
+                    FocusManager.instance.primaryFocus?.unfocus();
                   } else {
                     print("not saved");
                   }
                 },
-                child: Text('Save Changes')),
+                child: Text('Update')),
           ],
         ),
       ),

@@ -4,32 +4,29 @@ import 'package:wiifd/app_state/todo_state.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
 import 'package:wiifd/screens/settings/settings_model.dart';
-
 import '../../main.dart';
 
-final todoProvider =
-    StateNotifierProvider.autoDispose<TodoModel, TodoState>((ref) {
+final todoProvider = StateNotifierProvider<TodoModel, TodoState>((ref) {
   final dataStore = ref.watch(supabaseProvider);
-   final coins = 100;
-  // logger.e(coins);
 
-  return TodoModel(supabaseDB: dataStore, availableCoins: coins);
+  return TodoModel(supabaseDB: dataStore);
 });
 
 //--
 class TodoModel extends StateNotifier<TodoState> {
-  TodoModel({required this.supabaseDB, required this.availableCoins})
-      : super(TodoState.loading());
+  TodoModel({required this.supabaseDB}) : super(TodoState.loading());
 
   final SupabaseDB supabaseDB;
-  final availableCoins;
+
+
 
   addTodo({String? title, String? description}) async {
-    if (availableCoins < 10) {
+   final info =  await supabaseDB.loadProfileInfo();
+    if (info.availableCoins! < 10) {
       throw ("can't post todo");
     }
     int coinForThisTodo = 10;
-    int remainingCoins = availableCoins - coinForThisTodo;
+    int remainingCoins = info.availableCoins! - coinForThisTodo;
     int createdAt = DateTime.now().millisecondsSinceEpoch;
     int deleteAt =
         DateTime.now().add(Duration(hours: 24)).millisecondsSinceEpoch;

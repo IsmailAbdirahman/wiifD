@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
 import 'package:wiifd/screens/settings/settings.dart';
+import 'package:wiifd/screens/settings/settings_model.dart';
 import 'package:wiifd/screens/todo_screen/todo_info.dart';
 import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
@@ -201,11 +202,15 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
                               primary: AppColor().primaryColor),
                           onPressed: () {
                             final state = ref
-                                .watch(todoProvider.notifier)
+                                .read(todoProvider.notifier)
                                 .addTodo(
                                     title: _titleController.text,
                                     description: _descriptionController.text);
                             print("saved");
+                            _titleController.clear();
+                            _descriptionController.clear();
+                            ref.refresh(settingsProvider);
+
                             Navigator.pop(context);
                           },
                           child: Text(

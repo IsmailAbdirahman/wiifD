@@ -11,7 +11,6 @@ class TodoInfoScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final settingP = ref.watch(settingsProvider);
    // final nameState = ref.watch(userInfoAsync);
-   // ref.refresh(settingsProvider);
 
     return LayoutBuilder(
       builder: (_, constraints) {

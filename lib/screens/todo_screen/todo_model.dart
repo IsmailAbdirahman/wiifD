@@ -10,11 +10,6 @@ final todoProvider = StateNotifierProvider<TodoModel, TodoState>((ref) {
   return TodoModel(supabaseDB: dataStore);
 });
 
-final todoFuture = FutureProvider.autoDispose((ref) async {
-  final data = await ref.watch(todoProvider.notifier).loadTodoInfo();
-  return data;
-});
-
 //--
 class TodoModel extends StateNotifier<TodoState> {
   TodoModel({required this.supabaseDB}) : super(TodoState.loading()) {
@@ -58,7 +53,10 @@ class TodoModel extends StateNotifier<TodoState> {
       final data = todoInfo;
       state = TodoState.loading();
       await supabaseDB.addTodoInfo(data);
-      supabaseDB.updateCoins(remainingCoins);
+      await supabaseDB.updateCoins(remainingCoins);
+      await supabaseDB.loadTodoData().then((value) {
+        state = TodoState.data(value);
+      });
       return true;
     } catch (e) {
       throw (e);
@@ -67,6 +65,7 @@ class TodoModel extends StateNotifier<TodoState> {
 
   Future<List<TodoInfo>> loadTodoInfo() async {
     final data = await supabaseDB.loadTodoData();
+    state = TodoState.data(data);
     return data;
   }
 }

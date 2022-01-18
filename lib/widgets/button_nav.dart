@@ -219,7 +219,6 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
                               _titleController.clear();
                               _descriptionController.clear();
                               ref.refresh(settingsProvider);
-                              ref.refresh(todoFuture);
                               Navigator.pop(context);
                             }
                           },

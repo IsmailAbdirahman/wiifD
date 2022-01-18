@@ -99,7 +99,6 @@ class SupabaseDB {
     }
     List<dynamic> dynamicData = res.data;
     final data = dynamicData.map((e) => TodoInfo.fromJson(e)).toList();
-    logger.e(data[0].availableCoins);
     return data;
   }
 }

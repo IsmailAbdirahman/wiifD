@@ -10,7 +10,7 @@ class TodoInfoScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final settingP = ref.watch(settingsProvider);
-    final todoDataa = ref.watch(todoFuture);
+    final todoDataa = ref.watch(todoProvider);
 
     return LayoutBuilder(
       builder: (_, constraints) {
@@ -97,7 +97,7 @@ class TodoInfoScreen extends ConsumerWidget {
                               todoInfo: data[index],
                             );
                           }),
-                      error: (e, ee) => Text("No Todos")),
+                      error: (e) => Text("No Todos")),
                 )
               ],
             ));

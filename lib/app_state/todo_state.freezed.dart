@@ -22,7 +22,7 @@ class _$TodoStateTearOff {
     return const _loading();
   }
 
-  _data data(TodoInfo todoInfo) {
+  _data data(List<TodoInfo> todoInfo) {
     return _data(
       todoInfo,
     );
@@ -43,21 +43,21 @@ mixin _$TodoState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(TodoInfo todoInfo) data,
+    required TResult Function(List<TodoInfo> todoInfo) data,
     required TResult Function(String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) =>
@@ -140,7 +140,7 @@ class _$_loading implements _loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(TodoInfo todoInfo) data,
+    required TResult Function(List<TodoInfo> todoInfo) data,
     required TResult Function(String message) error,
   }) {
     return loading();
@@ -150,7 +150,7 @@ class _$_loading implements _loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
   }) {
     return loading?.call();
@@ -160,7 +160,7 @@ class _$_loading implements _loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -213,7 +213,7 @@ abstract class _loading implements TodoState {
 abstract class _$dataCopyWith<$Res> {
   factory _$dataCopyWith(_data value, $Res Function(_data) then) =
       __$dataCopyWithImpl<$Res>;
-  $Res call({TodoInfo todoInfo});
+  $Res call({List<TodoInfo> todoInfo});
 }
 
 /// @nodoc
@@ -233,7 +233,7 @@ class __$dataCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
       todoInfo == freezed
           ? _value.todoInfo
           : todoInfo // ignore: cast_nullable_to_non_nullable
-              as TodoInfo,
+              as List<TodoInfo>,
     ));
   }
 }
@@ -244,7 +244,7 @@ class _$_data implements _data {
   const _$_data(this.todoInfo);
 
   @override
-  final TodoInfo todoInfo;
+  final List<TodoInfo> todoInfo;
 
   @override
   String toString() {
@@ -272,7 +272,7 @@ class _$_data implements _data {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(TodoInfo todoInfo) data,
+    required TResult Function(List<TodoInfo> todoInfo) data,
     required TResult Function(String message) error,
   }) {
     return data(todoInfo);
@@ -282,7 +282,7 @@ class _$_data implements _data {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
   }) {
     return data?.call(todoInfo);
@@ -292,7 +292,7 @@ class _$_data implements _data {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
@@ -338,9 +338,9 @@ class _$_data implements _data {
 }
 
 abstract class _data implements TodoState {
-  const factory _data(TodoInfo todoInfo) = _$_data;
+  const factory _data(List<TodoInfo> todoInfo) = _$_data;
 
-  TodoInfo get todoInfo;
+  List<TodoInfo> get todoInfo;
   @JsonKey(ignore: true)
   _$dataCopyWith<_data> get copyWith => throw _privateConstructorUsedError;
 }
@@ -408,7 +408,7 @@ class _$_error implements _error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(TodoInfo todoInfo) data,
+    required TResult Function(List<TodoInfo> todoInfo) data,
     required TResult Function(String message) error,
   }) {
     return error(message);
@@ -418,7 +418,7 @@ class _$_error implements _error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
   }) {
     return error?.call(message);
@@ -428,7 +428,7 @@ class _$_error implements _error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(TodoInfo todoInfo)? data,
+    TResult Function(List<TodoInfo> todoInfo)? data,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {

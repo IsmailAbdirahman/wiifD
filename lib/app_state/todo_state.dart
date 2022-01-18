@@ -8,7 +8,7 @@ part 'todo_state.freezed.dart';
 class TodoState with _$TodoState {
   const factory TodoState.loading() = _loading;
 
-  const factory TodoState.data(TodoInfo todoInfo) = _data;
+  const factory TodoState.data(List<TodoInfo> todoInfo) = _data;
 
   const factory TodoState.error(String message) = _error;
 }

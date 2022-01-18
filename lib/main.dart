@@ -54,4 +54,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//TODO: Fix loading problem for first signing
+
+//TODO: Check coin updates
+//TODO: Try to find solution rather than using ref.refresh
+//TODO: Improve the code
+//TODO: add to db upto 5 todos at most.
+//TODO: Give back the 10 coins after deleting by the user only.

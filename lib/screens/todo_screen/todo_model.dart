@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wiifd/app_state/settings_state.dart';
 import 'package:wiifd/app_state/todo_state.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
@@ -18,9 +19,16 @@ class TodoModel extends StateNotifier<TodoState> {
 
   final SupabaseDB supabaseDB;
 
-  Future<bool> addTodo({String? title, String? description}) async {
-    state = TodoState.error("Title can't be empty");
+  Future<bool> saveUserInfo() async {
+    final res = await supabaseDB.saveUserInfo();
+    if (res) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
+  Future<bool> addTodo({String? title, String? description}) async {
     if (title == '') {
       state = TodoState.error("Title can't be empty");
       return false;

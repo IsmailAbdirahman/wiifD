@@ -6,9 +6,22 @@ import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 import 'package:wiifd/widgets/todo_info_tile.dart';
 
-class TodoInfoScreen extends ConsumerWidget {
+class TodoInfoScreen extends ConsumerStatefulWidget {
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TodoInfoScreen> createState() => _ConsumerTodoInfoScreenState();
+}
+
+class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(todoProvider.notifier).saveUserInfo().then((value) {
+      print("Info ::::::::::: $value");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final settingP = ref.watch(settingsProvider);
     final todoDataa = ref.watch(todoProvider);
 
@@ -97,7 +110,7 @@ class TodoInfoScreen extends ConsumerWidget {
                               todoInfo: data[index],
                             );
                           }),
-                      error: (e) => Text("No Todos")),
+                      error: (e) => Text("")),
                 )
               ],
             ));

@@ -13,7 +13,7 @@ final supabaseProvider = Provider((ref) => SupabaseDB());
 class SupabaseDB {
   //------ USer Profile -----------
 
-  saveUserInfo() async {
+  Future<bool> saveUserInfo() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     String userUID = auth.currentUser!.uid;
     String? name = auth.currentUser!.displayName;
@@ -23,9 +23,14 @@ class SupabaseDB {
       'userUID': userUID,
       'name': name,
       'email': email,
-      'available_coins': availableCoins
+      'availableCoins': availableCoins
     }).execute();
-    if (res.error != null) {}
+    if (res.error != null) {
+      logger.e(res.error);
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Future<ProfileSettings> updateName(String name) async {

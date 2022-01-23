@@ -22,34 +22,6 @@ class ButtonNavWidget extends ConsumerStatefulWidget {
 }
 
 class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
-  TextEditingController _timeController = TextEditingController();
-  TextEditingController _titleController = TextEditingController();
-  TextEditingController _descriptionController = TextEditingController();
-
-  String? _time, _hours, _min;
-
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
-
-  showTime(BuildContext context) async {
-    final pickedTime = await showTimePicker(
-      context: context,
-      initialTime: selectedTime,
-    );
-    if (pickedTime != null) {
-      setState(() {
-        selectedTime = pickedTime;
-        _hours = selectedTime.hour.toString();
-        _min = selectedTime.minute.toString();
-        _time = _hours! + ':' + _min!;
-        _timeController.text = _time!;
-        _timeController.text = formatDate(
-            DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().year, selectedTime.hour, selectedTime.minute),
-            [hh, ':', nn, " ", am]).toString();
-      });
-    }
-  }
-
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -66,9 +38,6 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
 
   @override
   void initState() {
-    _timeController.text = formatDate(
-        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
-        [hh, ':', nn, " ", am]).toString();
     super.initState();
   }
 
@@ -111,7 +80,12 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
             ),
             backgroundColor: AppColor().primaryColor,
             onPressed: () {
-              showTodoDialog();
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return TodoAlertDi();
+                  });
             },
             tooltip: 'Increment',
             child: Icon(Icons.add),
@@ -121,119 +95,161 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
       ),
     );
   }
+}
 
-  showTodoDialog() {
+class TodoAlertDi extends ConsumerStatefulWidget {
+  const TodoAlertDi({Key? key}) : super(key: key);
+
+  @override
+  _ConsumerTodoAlertDiState createState() => _ConsumerTodoAlertDiState();
+}
+
+class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
+  TextEditingController _timeController = TextEditingController();
+  TextEditingController _titleController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+
+  String? _time, _hours, _min;
+
+  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+
+  showTime(BuildContext context) async {
+    final pickedTime = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+    if (pickedTime != null) {
+      setState(() {
+        selectedTime = pickedTime;
+        _hours = selectedTime.hour.toString();
+        _min = selectedTime.minute.toString();
+        _time = _hours! + ':' + _min!;
+        _timeController.text = _time!;
+        _timeController.text = formatDate(
+            DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().year, selectedTime.hour, selectedTime.minute),
+            [hh, ':', nn, " ", am]).toString();
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _timeController.text = formatDate(
+        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
+        [hh, ':', nn, " ", am]).toString();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final kaaaa = ref.watch(todoProvider);
-    logger.e(kaaaa);
 
-    return showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-            child: Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0)), //this right here
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.5,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TodoTextInput(
-                        textController: _titleController,
-                        hint: "Title",
-                        textFieldHeight:
-                            MediaQuery.of(context).size.height * 0.05,
-                      ),
-                      TodoTextInput(
-                        textController: _descriptionController,
-                        hint: "Description",
-                        textFieldHeight:
-                            MediaQuery.of(context).size.height * 0.09,
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      kaaaa.when(
-                        loading: () => Text("Can't be empty"),
-                        error: (d) => Text("Can't be empty"),
-                        data: (d) => Text("When to remind?"),
-                      ),
-                      Container(
-                          height: MediaQuery.of(context).size.height * 0.05,
-                          width: MediaQuery.of(context).size.width * 0.8,
-                          decoration: BoxDecoration(
-                              color: AppColor().greyColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: Center(
-                              child: Padding(
-                            padding:
-                                const EdgeInsets.only(left: 12.0, right: 12),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                    height: 50,
-                                    width: 100,
-                                    child: TextField(
-                                      enabled: false,
-                                      controller: _timeController,
-                                    )),
-                                InkWell(
-                                  onTap: () {
-                                    showTime(context);
-                                  },
-                                  child: Icon(
-                                    Icons.timer_sharp,
-                                    color: AppColor().primaryColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ))),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 2,
-                        decoration: BoxDecoration(),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              primary: AppColor().primaryColor),
-                          onPressed: () async {
-                            final success = await ref
-                                .read(todoProvider.notifier)
-                                .addTodo(
-                                    title: _titleController.text,
-                                    description: _descriptionController.text);
-                            print("saved");
-
-                            if (success) {
-                              _titleController.clear();
-                              _descriptionController.clear();
-                              ref.refresh(settingsProvider);
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: Text(
-                            "Save",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+      child: Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0)), //this right here
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.5,
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TodoTextInput(
+                  textController: _titleController,
+                  hint: "Title",
+                  textFieldHeight: MediaQuery.of(context).size.height * 0.05,
                 ),
-              ),
+                TodoTextInput(
+                  textController: _descriptionController,
+                  hint: "Description",
+                  textFieldHeight: MediaQuery.of(context).size.height * 0.09,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                kaaaa.when(
+                  loading: () => Center(child: CircularProgressIndicator()),
+                  error: (error) => Text(
+                    error,
+                    style: TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.w600),
+                  ),
+                  data: (d) => Text(""),
+                ),
+                Text("When to remind?"),
+                Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    decoration: BoxDecoration(
+                        color: AppColor().greyColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 12.0, right: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              height: 50,
+                              width: 100,
+                              child: TextField(
+                                enabled: false,
+                                controller: _timeController,
+                              )),
+                          InkWell(
+                            onTap: () {
+                              showTime(context);
+                            },
+                            child: Icon(
+                              Icons.timer_sharp,
+                              color: AppColor().primaryColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ))),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 2,
+                  decoration: BoxDecoration(),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        primary: AppColor().primaryColor),
+                    onPressed: () async {
+                      final success = await ref
+                          .read(todoProvider.notifier)
+                          .addTodo(
+                              title: _titleController.text,
+                              description: _descriptionController.text);
+                      print("saved");
+
+                      if (success) {
+                        _titleController.clear();
+                        _descriptionController.clear();
+                        ref.refresh(settingsProvider);
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: kaaaa.when(
+                      loading: () => Text("Saving..."),
+                      error: (error) => Text("Save"),
+                      data: (d) => Text("Save"),
+                    ),
+                  ),
+                )
+              ],
             ),
-          );
-        });
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -9,19 +9,12 @@ final settingsProvider =
   return SettingsModel(supabaseDB: dataStore);
 });
 
-
-
-final futureData = FutureProvider((ref){
-  final data = ref.watch(settingsProvider.notifier).getInfo();
-  return data;
-});
-
 //--
 class SettingsModel extends StateNotifier<SettingsState> {
   SettingsModel({required this.supabaseDB})
       : super(SettingsState.initializing()) {
-    supabaseDB.saveUserInfo();
-    supabaseDB.loadProfileInfo();
+    saveUserInfo();
+    //supabaseDB.loadProfileInfo();
     getInfo();
   }
 
@@ -39,9 +32,19 @@ class SettingsModel extends StateNotifier<SettingsState> {
     return true;
   }
 
-  Future<SettingsState> getInfo() async {
-    final data = await supabaseDB.loadProfileInfo();
-    state = SettingsState.loaded(data);
-    return state;
+  Future<bool> saveUserInfo() async {
+    final res = await supabaseDB.saveUserInfo();
+    if (res) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void getInfo() {
+    saveUserInfo().then((value) async {
+      final data = await supabaseDB.loadProfileInfo();
+      state = SettingsState.loaded(data);
+    });
   }
 }

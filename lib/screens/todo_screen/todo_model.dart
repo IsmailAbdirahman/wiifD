@@ -19,14 +19,14 @@ class TodoModel extends StateNotifier<TodoState> {
 
   final SupabaseDB supabaseDB;
 
-  Future<bool> saveUserInfo() async {
-    final res = await supabaseDB.saveUserInfo();
-    if (res) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // Future<bool> saveUserInfo() async {
+  //   final res = await supabaseDB.saveUserInfo();
+  //   if (res) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   Future<bool> addTodo({String? title, String? description}) async {
     if (title == '') {

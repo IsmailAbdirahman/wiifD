@@ -15,9 +15,9 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
   @override
   void initState() {
     super.initState();
-    ref.read(todoProvider.notifier).saveUserInfo().then((value) {
-      print("Info ::::::::::: $value");
-    });
+    // ref.read(todoProvider.notifier).saveUserInfo().then((value) {
+    //   print("Info ::::::::::: $value");
+    // });
   }
 
   @override

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
+import 'package:wiifd/main.dart';
 import 'package:wiifd/screens/settings/settings_model.dart';
 import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
+import 'package:wiifd/widgets/delete_alert.dart';
 import 'package:wiifd/widgets/todo_info_tile.dart';
 
 class TodoInfoScreen extends ConsumerStatefulWidget {
@@ -106,8 +108,18 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
                       data: (data) => ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return TodoInfoTile(
-                              todoInfo: data[index],
+                            return InkWell(
+                              onLongPress: () {
+                                showDialog(
+                                    barrierDismissible: true,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return DeleteAlert(id: data[index].id!);
+                                    });
+                              },
+                              child: TodoInfoTile(
+                                todoInfo: data[index],
+                              ),
                             );
                           }),
                       error: (e) => Text("")),

@@ -72,6 +72,17 @@ class TodoModel extends StateNotifier<TodoState> {
     }
   }
 
+  deleteTodo(String id) async {
+    state = TodoState.loading();
+    final isDeleted = await supabaseDB.deleteTodo(id);
+    if (isDeleted) {
+      final data = await loadTodoInfo();
+      state = TodoState.data(data);
+    } else {
+      state = TodoState.error('Something Went Wrong');
+    }
+  }
+
   Future<List<TodoInfo>> loadTodoInfo() async {
     final data = await supabaseDB.loadTodoData();
     state = TodoState.data(data);

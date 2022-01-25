@@ -108,4 +108,13 @@ class SupabaseDB {
     final data = dynamicData.map((e) => TodoInfo.fromJson(e)).toList();
     return data;
   }
+
+  Future<bool> deleteTodo(String id) async {
+    final res = await client.from('todo_info').delete().eq('id', id).execute();
+    if (res.error != null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 }

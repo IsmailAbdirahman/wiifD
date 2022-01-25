@@ -29,6 +29,7 @@ class TodoModel extends StateNotifier<TodoState> {
   // }
 
   Future<bool> addTodo({String? title, String? description}) async {
+    state = TodoState.loading();
     if (title == '') {
       state = TodoState.error("Title can't be empty");
       return false;

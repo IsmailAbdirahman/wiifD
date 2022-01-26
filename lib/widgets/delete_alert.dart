@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wiifd/screens/settings/settings_model.dart';
 import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 
@@ -80,10 +81,11 @@ class _ConsumerTodoAlertDiState extends ConsumerState<DeleteAlert> {
                             width: MediaQuery.of(context).size.width * 0.19,
                             child: OutlinedButton(
                                 style: buttonStyle,
-                                onPressed: () {
-                                  ref
+                                onPressed: () async {
+                                  await ref
                                       .read(todoProvider.notifier)
                                       .deleteTodo(widget.id);
+                                  ref.refresh(settingsProvider);
                                   Navigator.pop(context);
                                   logger.d("Delete it...");
                                 },

@@ -87,7 +87,7 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
                     return TodoAlertDi();
                   });
             },
-            tooltip: 'Increment',
+            tooltip: 'Add',
             child: Icon(Icons.add),
             elevation: 2.0,
           ),
@@ -111,7 +111,7 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
 
   String? _time, _hours, _min;
 
-  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  TimeOfDay selectedTime = TimeOfDay.now();
 
   showTime(BuildContext context) async {
     final pickedTime = await showTimePicker(
@@ -137,7 +137,8 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
   void initState() {
     super.initState();
     _timeController.text = formatDate(
-        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
+        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute)
+            .add(Duration(hours: 5)),
         [hh, ':', nn, " ", am]).toString();
   }
 
@@ -163,14 +164,6 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                   hint: "Title",
                   textFieldHeight: MediaQuery.of(context).size.height * 0.05,
                 ),
-                TodoTextInput(
-                  textController: _descriptionController,
-                  hint: "Description",
-                  textFieldHeight: MediaQuery.of(context).size.height * 0.09,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
                 kaaaa.when(
                   loading: () => Center(child: CircularProgressIndicator()),
                   error: (error) => Text(
@@ -179,6 +172,14 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                         color: Colors.red, fontWeight: FontWeight.w600),
                   ),
                   data: (d) => Text(""),
+                ),
+                TodoTextInput(
+                  textController: _descriptionController,
+                  hint: "Description",
+                  textFieldHeight: MediaQuery.of(context).size.height * 0.09,
+                ),
+                SizedBox(
+                  height: 10,
                 ),
                 Text("When to remind?"),
                 Container(
@@ -229,14 +230,13 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                           .addTodo(
                               title: _titleController.text,
                               description: _descriptionController.text);
-                      print("saved");
-
                       if (success) {
                         _titleController.clear();
                         _descriptionController.clear();
                         ref.refresh(settingsProvider);
                         Navigator.pop(context);
                       }
+                      ref.refresh(todoProvider);
                     },
                     child: kaaaa.when(
                       loading: () => Text("Saving..."),

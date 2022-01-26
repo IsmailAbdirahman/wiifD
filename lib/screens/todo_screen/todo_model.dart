@@ -19,14 +19,10 @@ class TodoModel extends StateNotifier<TodoState> {
 
   final SupabaseDB supabaseDB;
 
-  // Future<bool> saveUserInfo() async {
-  //   final res = await supabaseDB.saveUserInfo();
-  //   if (res) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+  Future<int> getRemainingCoins() async {
+    final coins = await supabaseDB.loadProfileInfo();
+    return Future.value(coins.availableCoins);
+  }
 
   Future<bool> addTodo({String? title, String? description}) async {
     state = TodoState.loading();
@@ -34,13 +30,14 @@ class TodoModel extends StateNotifier<TodoState> {
       state = TodoState.error("Title can't be empty");
       return false;
     }
-    final info = await supabaseDB.loadProfileInfo();
-    if (info.availableCoins! < 10) {
-      state = TodoState.error("can't post todo Please pay coins");
-      throw ("can't post todo Please pay coins");
+    final coins = await getRemainingCoins();
+    if (coins < 10) {
+      state = TodoState.error(
+          "You wasted all your coins, get new coins and waste again!");
+      return false;
     }
     int coinForThisTodo = 10;
-    int remainingCoins = info.availableCoins! - coinForThisTodo;
+    int remainingCoins = coins - coinForThisTodo;
     int createdAt = DateTime.now().millisecondsSinceEpoch;
     int deleteAt =
         DateTime.now().add(Duration(hours: 24)).millisecondsSinceEpoch;
@@ -74,6 +71,9 @@ class TodoModel extends StateNotifier<TodoState> {
 
   deleteTodo(String id) async {
     state = TodoState.loading();
+    final avCoins = await getRemainingCoins();
+    int returnCoins = avCoins + 10;
+    await supabaseDB.updateCoins(returnCoins);
     final isDeleted = await supabaseDB.deleteTodo(id);
     if (isDeleted) {
       final data = await loadTodoInfo();

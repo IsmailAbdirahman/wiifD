@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
+import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 
-class TodoInfoTile extends StatelessWidget {
+class TodoInfoTile extends ConsumerWidget {
   final TodoInfo? todoInfo;
 
   TodoInfoTile({this.todoInfo});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final timeConverter =
+        ref.watch(todoProvider.notifier).fromSinceEpoch(todoInfo!.notifyTime!);
     return LayoutBuilder(builder: (_, constraints) {
       final heightC = constraints.biggest.height;
       final widthC = constraints.biggest.width;
@@ -60,7 +64,7 @@ class TodoInfoTile extends StatelessWidget {
                           size: 15,
                         ),
                         Text(
-                          "${todoInfo!.notifyTime.toString()}",
+                          "${timeConverter.toString()}",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.w500,

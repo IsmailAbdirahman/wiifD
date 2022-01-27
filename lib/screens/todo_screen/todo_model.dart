@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/app_state/settings_state.dart';
 import 'package:wiifd/app_state/todo_state.dart';
@@ -24,7 +25,8 @@ class TodoModel extends StateNotifier<TodoState> {
     return Future.value(coins.availableCoins);
   }
 
-  Future<bool> addTodo({String? title, String? description}) async {
+  Future<bool> addTodo(
+      {String? title, String? description, String? timeToNotify}) async {
     state = TodoState.loading();
     if (title == '') {
       state = TodoState.error("Title can't be empty");
@@ -41,8 +43,9 @@ class TodoModel extends StateNotifier<TodoState> {
     int createdAt = DateTime.now().millisecondsSinceEpoch;
     int deleteAt =
         DateTime.now().add(Duration(hours: 24)).millisecondsSinceEpoch;
-    int notifyTime =
-        DateTime.now().add(Duration(hours: 20)).millisecondsSinceEpoch;
+
+    int notifyTime = toSinceEpoch(timeToNotify ?? null);
+
     FirebaseAuth auth = FirebaseAuth.instance;
     String userUID = auth.currentUser!.uid;
     TodoInfo todoInfo = TodoInfo(
@@ -87,5 +90,22 @@ class TodoModel extends StateNotifier<TodoState> {
     final data = await supabaseDB.loadTodoData();
     state = TodoState.data(data);
     return data;
+  }
+
+//--------Time Converter------
+
+  int toSinceEpoch(String? time) {
+    if (time != null) {
+      return DateTime.parse(time).millisecondsSinceEpoch;
+    } else {
+      return DateTime.now().add(Duration(hours: 10)).millisecondsSinceEpoch;
+    }
+  }
+
+  String fromSinceEpoch(int timeAsInt) {
+    DateTime now = DateTime.fromMillisecondsSinceEpoch(timeAsInt);
+    TimeOfDay timeOfDay = TimeOfDay(hour: now.hour, minute: now.minute);
+    String time = timeOfDay.hour.toString() + ":" + timeOfDay.minute.toString();
+    return time;
   }
 }

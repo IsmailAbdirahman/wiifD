@@ -108,10 +108,10 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
   TextEditingController _timeController = TextEditingController();
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
-
+  DateTime now = DateTime.now();
   String? _time, _hours, _min;
-
   TimeOfDay selectedTime = TimeOfDay.now();
+  String? currentTime;
 
   showTime(BuildContext context) async {
     final pickedTime = await showTimePicker(
@@ -124,22 +124,12 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
         _hours = selectedTime.hour.toString();
         _min = selectedTime.minute.toString();
         _time = _hours! + ':' + _min!;
+        currentTime = DateTime(now.year, now.month, now.day, selectedTime.hour,
+                selectedTime.minute)
+            .toString();
         _timeController.text = _time!;
-        _timeController.text = formatDate(
-            DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().year, selectedTime.hour, selectedTime.minute),
-            [hh, ':', nn, " ", am]).toString();
       });
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _timeController.text = formatDate(
-        DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute)
-            .add(Duration(hours: 5)),
-        [hh, ':', nn, " ", am]).toString();
   }
 
   @override
@@ -225,11 +215,15 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                             borderRadius: BorderRadius.circular(10)),
                         primary: AppColor().primaryColor),
                     onPressed: () async {
+                      logger.wtf(
+                          "----------------- ${_timeController.text}------------------");
+
                       final success = await ref
                           .read(todoProvider.notifier)
                           .addTodo(
                               title: _titleController.text,
-                              description: _descriptionController.text);
+                              description: _descriptionController.text,
+                              timeToNotify: currentTime);
                       if (success) {
                         _titleController.clear();
                         _descriptionController.clear();

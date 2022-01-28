@@ -84,7 +84,7 @@ class _ConsumerTodoAlertDiState extends ConsumerState<DeleteAlert> {
                                 onPressed: () async {
                                   await ref
                                       .read(todoProvider.notifier)
-                                      .deleteTodo(widget.id);
+                                      .deleteTodo(id: widget.id, isDeletedByUser: true);
                                   ref.refresh(settingsProvider);
                                   Navigator.pop(context);
                                   logger.d("Delete it...");

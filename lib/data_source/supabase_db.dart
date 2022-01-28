@@ -14,8 +14,6 @@ class SupabaseDB {
   //------ USer Profile -----------
 
   Future<bool> saveUserInfo() async {
-    logger.wtf("saveUserInfo():---------::: I am called first");
-
     FirebaseAuth auth = FirebaseAuth.instance;
     String userUID = auth.currentUser!.uid;
     String? name = auth.currentUser!.displayName;
@@ -49,7 +47,6 @@ class SupabaseDB {
   }
 
   Future<ProfileSettings> loadProfileInfo() async {
-    logger.wtf("loadProfileInfo():---------::: I am called second");
     FirebaseAuth auth = FirebaseAuth.instance;
     String userUID = auth.currentUser!.uid;
     final res = await client

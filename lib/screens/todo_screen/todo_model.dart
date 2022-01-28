@@ -25,24 +25,45 @@ class TodoModel extends StateNotifier<TodoState> {
     return Future.value(coins.availableCoins);
   }
 
+  Future<bool> checkLengthOfTodo() async {
+    final todos = await loadTodoInfo();
+    var length = todos.length;
+    logger.w("THE LENGTH OF TODOS IS :::::--------- $length");
+    if (length == 5) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<bool> addTodo(
       {String? title, String? description, String? timeToNotify}) async {
     state = TodoState.loading();
+    final isListFull = await checkLengthOfTodo();
+    final coins = await getRemainingCoins();
+
     if (title == '') {
       state = TodoState.error("Title can't be empty");
       return false;
     }
-    final coins = await getRemainingCoins();
+
+    if (isListFull) {
+      logger.e("The list is full");
+      state = TodoState.error("The list is full");
+      return false;
+    }
+
     if (coins < 10) {
       state = TodoState.error(
           "You wasted all your coins, get new coins and waste again!");
       return false;
     }
+
     int coinForThisTodo = 10;
     int remainingCoins = coins - coinForThisTodo;
     int createdAt = DateTime.now().millisecondsSinceEpoch;
     int deleteAt =
-        DateTime.now().add(Duration(hours: 24)).millisecondsSinceEpoch;
+        DateTime.now().add(Duration(minutes: 1)).millisecondsSinceEpoch;
 
     int notifyTime = toSinceEpoch(timeToNotify ?? null);
 
@@ -72,17 +93,29 @@ class TodoModel extends StateNotifier<TodoState> {
     }
   }
 
-  deleteTodo(String id) async {
-    state = TodoState.loading();
+  deleteTodo({String? id, bool? isDeletedByUser}) async {
     final avCoins = await getRemainingCoins();
     int returnCoins = avCoins + 10;
-    await supabaseDB.updateCoins(returnCoins);
-    final isDeleted = await supabaseDB.deleteTodo(id);
-    if (isDeleted) {
-      final data = await loadTodoInfo();
-      state = TodoState.data(data);
+    if (id != null) {
+      if (isDeletedByUser == true) {
+        await supabaseDB.updateCoins(returnCoins);
+      }
+      final isDeleted = await supabaseDB.deleteTodo(id);
+      if (isDeleted) {
+      } else {
+        state = TodoState.error('Something Went Wrong');
+      }
+    }
+  }
+
+  Future<bool> deleteLateTodo(int index) async {
+    var todo = await loadTodoInfo();
+    DateTime deleteTime = fromSinceEpoch(todo[index].deleteAt!);
+    if (DateTime.now().isAfter(deleteTime)) {
+      await deleteTodo(id: todo[index].id!, isDeletedByUser: false);
+      return true;
     } else {
-      state = TodoState.error('Something Went Wrong');
+      return false;
     }
   }
 
@@ -102,7 +135,12 @@ class TodoModel extends StateNotifier<TodoState> {
     }
   }
 
-  String fromSinceEpoch(int timeAsInt) {
+  DateTime fromSinceEpoch(int time) {
+    DateTime convertedTime = DateTime.fromMillisecondsSinceEpoch(time);
+    return convertedTime;
+  }
+
+  String timeToNotifyConverter(int timeAsInt) {
     DateTime now = DateTime.fromMillisecondsSinceEpoch(timeAsInt);
     TimeOfDay timeOfDay = TimeOfDay(hour: now.hour, minute: now.minute);
     String time = timeOfDay.hour.toString() + ":" + timeOfDay.minute.toString();

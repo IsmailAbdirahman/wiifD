@@ -108,6 +108,9 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
                       data: (data) => ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
+                            ref
+                                .read(todoProvider.notifier)
+                                .deleteLateTodo(index);
                             return InkWell(
                               onLongPress: () {
                                 showDialog(

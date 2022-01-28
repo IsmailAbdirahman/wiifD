@@ -12,7 +12,7 @@ class TodoInfoTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final timeConverter =
-        ref.watch(todoProvider.notifier).fromSinceEpoch(todoInfo!.notifyTime!);
+        ref.watch(todoProvider.notifier).timeToNotifyConverter(todoInfo!.notifyTime!);
     return LayoutBuilder(builder: (_, constraints) {
       final heightC = constraints.biggest.height;
       final widthC = constraints.biggest.width;

@@ -63,7 +63,7 @@ class TodoModel extends StateNotifier<TodoState> {
     int remainingCoins = coins - coinForThisTodo;
     int createdAt = DateTime.now().millisecondsSinceEpoch;
     int deleteAt =
-        DateTime.now().add(Duration(minutes: 1)).millisecondsSinceEpoch;
+        DateTime.now().add(Duration(minutes: 15)).millisecondsSinceEpoch;
 
     int notifyTime = toSinceEpoch(timeToNotify ?? null);
 

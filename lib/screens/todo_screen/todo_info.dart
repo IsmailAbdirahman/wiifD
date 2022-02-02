@@ -56,50 +56,92 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
                         Text('Error: $e'),
                   )),
               actions: [
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PaymentScreen()),
-                    );
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.12,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                          color: AppColor().greyColor),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          settingP.when(
-                              loaded: (data) => Text(
-                                    data.availableCoins.toString(),
-                                    style: TextStyle(
-                                        color: AppColor().primaryColor,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 12),
-                                  ),
-                              error: (
-                                e,
-                              ) =>
-                                  Text('Error: $e'),
-                              initializing: () =>
-                                  Center(child: Text("wait..."))),
-                          Text(
-                            "Coins",
-                            style: TextStyle(
-                                color: AppColor().primaryColor,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12),
-                          ),
-                        ],
+                settingP.when(
+                  initializing: () => Text("Wait..."),
+                  error: (e) => Text(e),
+                  loaded: (data) => InkWell(
+                    onTap: () {
+                      if (data.availableCoins == 0) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PaymentScreen()),
+                        );
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.12,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
+                            color: AppColor().greyColor),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            settingP.when(
+                                loaded: (data) => Text(
+                                      data.availableCoins.toString(),
+                                      style: TextStyle(
+                                          color: AppColor().primaryColor,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 12),
+                                    ),
+                                error: (
+                                  e,
+                                ) =>
+                                    Text('Error: $e'),
+                                initializing: () =>
+                                    Center(child: Text("wait..."))),
+                            Text(
+                              "Coins",
+                              style: TextStyle(
+                                  color: AppColor().primaryColor,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                )
+
+                // Padding(
+                //   padding: const EdgeInsets.all(10.0),
+                //   child: Container(
+                //     width: MediaQuery.of(context).size.width * 0.12,
+                //     decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.all(Radius.circular(5)),
+                //         color: AppColor().greyColor),
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //       children: [
+                //         settingP.when(
+                //             loaded: (data) => Text(
+                //                   data.availableCoins.toString(),
+                //                   style: TextStyle(
+                //                       color: AppColor().primaryColor,
+                //                       fontWeight: FontWeight.w600,
+                //                       fontSize: 12),
+                //                 ),
+                //             error: (
+                //               e,
+                //             ) =>
+                //                 Text('Error: $e'),
+                //             initializing: () =>
+                //                 Center(child: Text("wait..."))),
+                //         Text(
+                //           "Coins",
+                //           style: TextStyle(
+                //               color: AppColor().primaryColor,
+                //               fontWeight: FontWeight.w600,
+                //               fontSize: 12),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ],
             ),
             body: Column(

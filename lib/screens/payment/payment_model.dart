@@ -4,7 +4,7 @@ import 'package:wiifd/app_state/purchase_state.dart';
 import 'package:wiifd/data_source/payment_source.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
 
-final settingsProvider =
+final paymentModelProvider =
     StateNotifierProvider<PaymentModel, PurchaseState>((ref) {
   final paymentSource = ref.watch(paymentProvider);
   final dataSource = ref.watch(supabaseProvider);
@@ -15,6 +15,7 @@ class PaymentModel extends StateNotifier<PurchaseState> {
   PaymentModel({required this.paymentSource, required this.supabaseDB})
       : super(PurchaseState.notPurchased()) {
     paymentSource.checkActiveSubscriptions();
+    getPackages();
   }
 
   final PaymentSource paymentSource;

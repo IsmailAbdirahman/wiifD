@@ -30,6 +30,7 @@ dependencies:
   uuid: ^3.0.5
   google_sign_in_mocks: ^0.2.1
   firebase_auth_mocks: ^0.8.2
+  purchases_flutter: ^3.9.3
 
 
 dev_dependencies:

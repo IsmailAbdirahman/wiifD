@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/main.dart';
+import 'package:wiifd/screens/payment/payment_screen.dart';
 import 'package:wiifd/screens/settings/settings_model.dart';
 import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
@@ -55,37 +56,47 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
                         Text('Error: $e'),
                   )),
               actions: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.12,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                        color: AppColor().greyColor),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        settingP.when(
-                            loaded: (data) => Text(
-                                  data.availableCoins.toString(),
-                                  style: TextStyle(
-                                      color: AppColor().primaryColor,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 12),
-                                ),
-                            error: (
-                              e,
-                            ) =>
-                                Text('Error: $e'),
-                            initializing: () => Center(child: Text("wait..."))),
-                        Text(
-                          "Coins",
-                          style: TextStyle(
-                              color: AppColor().primaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12),
-                        ),
-                      ],
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PaymentScreen()),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.12,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          color: AppColor().greyColor),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          settingP.when(
+                              loaded: (data) => Text(
+                                    data.availableCoins.toString(),
+                                    style: TextStyle(
+                                        color: AppColor().primaryColor,
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 12),
+                                  ),
+                              error: (
+                                e,
+                              ) =>
+                                  Text('Error: $e'),
+                              initializing: () =>
+                                  Center(child: Text("wait..."))),
+                          Text(
+                            "Coins",
+                            style: TextStyle(
+                                color: AppColor().primaryColor,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

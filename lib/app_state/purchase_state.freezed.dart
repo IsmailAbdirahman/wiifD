@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'settings_state.dart';
+part of 'purchase_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,11 +14,11 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$SettingsStateTearOff {
-  const _$SettingsStateTearOff();
+class _$PurchaseStateTearOff {
+  const _$PurchaseStateTearOff();
 
-  _initializing initializing() {
-    return const _initializing();
+  _notPurchased notPurchased() {
+    return const _notPurchased();
   }
 
   _Error error(String errorMessage) {
@@ -27,114 +27,114 @@ class _$SettingsStateTearOff {
     );
   }
 
-  _Loaded loaded(ProfileSettings data) {
-    return _Loaded(
-      data,
+  _purchased purchase(List<Package> package) {
+    return _purchased(
+      package,
     );
   }
 }
 
 /// @nodoc
-const $SettingsState = _$SettingsStateTearOff();
+const $PurchaseState = _$PurchaseStateTearOff();
 
 /// @nodoc
-mixin _$SettingsState {
+mixin _$PurchaseState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initializing,
+    required TResult Function() notPurchased,
     required TResult Function(String errorMessage) error,
-    required TResult Function(ProfileSettings data) loaded,
+    required TResult Function(List<Package> package) purchase,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_initializing value) initializing,
+    required TResult Function(_notPurchased value) notPurchased,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_purchased value) purchase,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SettingsStateCopyWith<$Res> {
-  factory $SettingsStateCopyWith(
-          SettingsState value, $Res Function(SettingsState) then) =
-      _$SettingsStateCopyWithImpl<$Res>;
+abstract class $PurchaseStateCopyWith<$Res> {
+  factory $PurchaseStateCopyWith(
+          PurchaseState value, $Res Function(PurchaseState) then) =
+      _$PurchaseStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SettingsStateCopyWithImpl<$Res>
-    implements $SettingsStateCopyWith<$Res> {
-  _$SettingsStateCopyWithImpl(this._value, this._then);
+class _$PurchaseStateCopyWithImpl<$Res>
+    implements $PurchaseStateCopyWith<$Res> {
+  _$PurchaseStateCopyWithImpl(this._value, this._then);
 
-  final SettingsState _value;
+  final PurchaseState _value;
   // ignore: unused_field
-  final $Res Function(SettingsState) _then;
+  final $Res Function(PurchaseState) _then;
 }
 
 /// @nodoc
-abstract class _$initializingCopyWith<$Res> {
-  factory _$initializingCopyWith(
-          _initializing value, $Res Function(_initializing) then) =
-      __$initializingCopyWithImpl<$Res>;
+abstract class _$notPurchasedCopyWith<$Res> {
+  factory _$notPurchasedCopyWith(
+          _notPurchased value, $Res Function(_notPurchased) then) =
+      __$notPurchasedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$initializingCopyWithImpl<$Res>
-    extends _$SettingsStateCopyWithImpl<$Res>
-    implements _$initializingCopyWith<$Res> {
-  __$initializingCopyWithImpl(
-      _initializing _value, $Res Function(_initializing) _then)
-      : super(_value, (v) => _then(v as _initializing));
+class __$notPurchasedCopyWithImpl<$Res>
+    extends _$PurchaseStateCopyWithImpl<$Res>
+    implements _$notPurchasedCopyWith<$Res> {
+  __$notPurchasedCopyWithImpl(
+      _notPurchased _value, $Res Function(_notPurchased) _then)
+      : super(_value, (v) => _then(v as _notPurchased));
 
   @override
-  _initializing get _value => super._value as _initializing;
+  _notPurchased get _value => super._value as _notPurchased;
 }
 
 /// @nodoc
 
-class _$_initializing implements _initializing {
-  const _$_initializing();
+class _$_notPurchased implements _notPurchased {
+  const _$_notPurchased();
 
   @override
   String toString() {
-    return 'SettingsState.initializing()';
+    return 'PurchaseState.notPurchased()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _initializing);
+        (other.runtimeType == runtimeType && other is _notPurchased);
   }
 
   @override
@@ -143,33 +143,33 @@ class _$_initializing implements _initializing {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initializing,
+    required TResult Function() notPurchased,
     required TResult Function(String errorMessage) error,
-    required TResult Function(ProfileSettings data) loaded,
+    required TResult Function(List<Package> package) purchase,
   }) {
-    return initializing();
+    return notPurchased();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
   }) {
-    return initializing?.call();
+    return notPurchased?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
     required TResult orElse(),
   }) {
-    if (initializing != null) {
-      return initializing();
+    if (notPurchased != null) {
+      return notPurchased();
     }
     return orElse();
   }
@@ -177,40 +177,40 @@ class _$_initializing implements _initializing {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_initializing value) initializing,
+    required TResult Function(_notPurchased value) notPurchased,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_purchased value) purchase,
   }) {
-    return initializing(this);
+    return notPurchased(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
   }) {
-    return initializing?.call(this);
+    return notPurchased?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
     required TResult orElse(),
   }) {
-    if (initializing != null) {
-      return initializing(this);
+    if (notPurchased != null) {
+      return notPurchased(this);
     }
     return orElse();
   }
 }
 
-abstract class _initializing implements SettingsState {
-  const factory _initializing() = _$_initializing;
+abstract class _notPurchased implements PurchaseState {
+  const factory _notPurchased() = _$_notPurchased;
 }
 
 /// @nodoc
@@ -221,7 +221,7 @@ abstract class _$ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$SettingsStateCopyWithImpl<$Res>
+class __$ErrorCopyWithImpl<$Res> extends _$PurchaseStateCopyWithImpl<$Res>
     implements _$ErrorCopyWith<$Res> {
   __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
       : super(_value, (v) => _then(v as _Error));
@@ -252,7 +252,7 @@ class _$_Error implements _Error {
 
   @override
   String toString() {
-    return 'SettingsState.error(errorMessage: $errorMessage)';
+    return 'PurchaseState.error(errorMessage: $errorMessage)';
   }
 
   @override
@@ -276,9 +276,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initializing,
+    required TResult Function() notPurchased,
     required TResult Function(String errorMessage) error,
-    required TResult Function(ProfileSettings data) loaded,
+    required TResult Function(List<Package> package) purchase,
   }) {
     return error(errorMessage);
   }
@@ -286,9 +286,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
   }) {
     return error?.call(errorMessage);
   }
@@ -296,9 +296,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -310,9 +310,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_initializing value) initializing,
+    required TResult Function(_notPurchased value) notPurchased,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_purchased value) purchase,
   }) {
     return error(this);
   }
@@ -320,9 +320,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
   }) {
     return error?.call(this);
   }
@@ -330,9 +330,9 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -342,7 +342,7 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements SettingsState {
+abstract class _Error implements PurchaseState {
   const factory _Error(String errorMessage) = _$_Error;
 
   String get errorMessage;
@@ -351,94 +351,95 @@ abstract class _Error implements SettingsState {
 }
 
 /// @nodoc
-abstract class _$LoadedCopyWith<$Res> {
-  factory _$LoadedCopyWith(_Loaded value, $Res Function(_Loaded) then) =
-      __$LoadedCopyWithImpl<$Res>;
-  $Res call({ProfileSettings data});
+abstract class _$purchasedCopyWith<$Res> {
+  factory _$purchasedCopyWith(
+          _purchased value, $Res Function(_purchased) then) =
+      __$purchasedCopyWithImpl<$Res>;
+  $Res call({List<Package> package});
 }
 
 /// @nodoc
-class __$LoadedCopyWithImpl<$Res> extends _$SettingsStateCopyWithImpl<$Res>
-    implements _$LoadedCopyWith<$Res> {
-  __$LoadedCopyWithImpl(_Loaded _value, $Res Function(_Loaded) _then)
-      : super(_value, (v) => _then(v as _Loaded));
+class __$purchasedCopyWithImpl<$Res> extends _$PurchaseStateCopyWithImpl<$Res>
+    implements _$purchasedCopyWith<$Res> {
+  __$purchasedCopyWithImpl(_purchased _value, $Res Function(_purchased) _then)
+      : super(_value, (v) => _then(v as _purchased));
 
   @override
-  _Loaded get _value => super._value as _Loaded;
+  _purchased get _value => super._value as _purchased;
 
   @override
   $Res call({
-    Object? data = freezed,
+    Object? package = freezed,
   }) {
-    return _then(_Loaded(
-      data == freezed
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as ProfileSettings,
+    return _then(_purchased(
+      package == freezed
+          ? _value.package
+          : package // ignore: cast_nullable_to_non_nullable
+              as List<Package>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_Loaded implements _Loaded {
-  const _$_Loaded(this.data);
+class _$_purchased implements _purchased {
+  const _$_purchased(this.package);
 
   @override
-  final ProfileSettings data;
+  final List<Package> package;
 
   @override
   String toString() {
-    return 'SettingsState.loaded(data: $data)';
+    return 'PurchaseState.purchase(package: $package)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _Loaded &&
-            const DeepCollectionEquality().equals(other.data, data));
+            other is _purchased &&
+            const DeepCollectionEquality().equals(other.package, package));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(data));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(package));
 
   @JsonKey(ignore: true)
   @override
-  _$LoadedCopyWith<_Loaded> get copyWith =>
-      __$LoadedCopyWithImpl<_Loaded>(this, _$identity);
+  _$purchasedCopyWith<_purchased> get copyWith =>
+      __$purchasedCopyWithImpl<_purchased>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initializing,
+    required TResult Function() notPurchased,
     required TResult Function(String errorMessage) error,
-    required TResult Function(ProfileSettings data) loaded,
+    required TResult Function(List<Package> package) purchase,
   }) {
-    return loaded(data);
+    return purchase(package);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
   }) {
-    return loaded?.call(data);
+    return purchase?.call(package);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initializing,
+    TResult Function()? notPurchased,
     TResult Function(String errorMessage)? error,
-    TResult Function(ProfileSettings data)? loaded,
+    TResult Function(List<Package> package)? purchase,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(data);
+    if (purchase != null) {
+      return purchase(package);
     }
     return orElse();
   }
@@ -446,42 +447,43 @@ class _$_Loaded implements _Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_initializing value) initializing,
+    required TResult Function(_notPurchased value) notPurchased,
     required TResult Function(_Error value) error,
-    required TResult Function(_Loaded value) loaded,
+    required TResult Function(_purchased value) purchase,
   }) {
-    return loaded(this);
+    return purchase(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
   }) {
-    return loaded?.call(this);
+    return purchase?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_initializing value)? initializing,
+    TResult Function(_notPurchased value)? notPurchased,
     TResult Function(_Error value)? error,
-    TResult Function(_Loaded value)? loaded,
+    TResult Function(_purchased value)? purchase,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(this);
+    if (purchase != null) {
+      return purchase(this);
     }
     return orElse();
   }
 }
 
-abstract class _Loaded implements SettingsState {
-  const factory _Loaded(ProfileSettings data) = _$_Loaded;
+abstract class _purchased implements PurchaseState {
+  const factory _purchased(List<Package> package) = _$_purchased;
 
-  ProfileSettings get data;
+  List<Package> get package;
   @JsonKey(ignore: true)
-  _$LoadedCopyWith<_Loaded> get copyWith => throw _privateConstructorUsedError;
+  _$purchasedCopyWith<_purchased> get copyWith =>
+      throw _privateConstructorUsedError;
 }

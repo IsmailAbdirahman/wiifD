@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:wiifd/screens/settings/settings_model.dart';
+import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 
 import 'payment_model.dart';
@@ -38,6 +39,7 @@ class PaymentScreen extends ConsumerWidget {
                                 onClickedPackage: (package) async {
                                   await purchase.makePurchase(package);
                                   ref.refresh(settingsProvider);
+                                  ref.refresh(todoProvider);
                                   Navigator.pop(context);
                                 },
                               ),

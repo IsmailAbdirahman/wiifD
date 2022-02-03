@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
+import 'package:wiifd/screens/payment/payment_screen.dart';
 import 'package:wiifd/screens/settings/settings.dart';
 import 'package:wiifd/screens/settings/settings_model.dart';
 import 'package:wiifd/screens/todo_screen/todo_info.dart';
@@ -43,6 +44,10 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final futureData = ref.watch(lengthAndCoinProvider);
+
+    final listLength = ref.watch(todoProvider.notifier).isListFull;
+    final coins = ref.watch(todoProvider.notifier).coins;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -80,12 +85,20 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
             ),
             backgroundColor: AppColor().primaryColor,
             onPressed: () {
-              showDialog(
-                  barrierDismissible: false,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return TodoAlertDi();
-                  });
+              if (coins == 0) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PaymentScreen()),
+                );
+              } else {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return TodoAlertDi();
+                    });
+              }
             },
             tooltip: 'Add',
             child: Icon(Icons.add),
@@ -215,8 +228,6 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                             borderRadius: BorderRadius.circular(10)),
                         primary: AppColor().primaryColor),
                     onPressed: () async {
-                      logger.wtf(
-                          "----------------- ${_timeController.text}------------------");
 
                       final success = await ref
                           .read(todoProvider.notifier)
@@ -224,13 +235,15 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                               title: _titleController.text,
                               description: _descriptionController.text,
                               timeToNotify: currentTime);
+                      logger.wtf(
+                          "----------------- $success------------------");
                       if (success) {
                         _titleController.clear();
                         _descriptionController.clear();
                         ref.refresh(settingsProvider);
                         Navigator.pop(context);
                       }
-                      ref.refresh(todoProvider);
+                     ref.refresh(todoProvider);
                     },
                     child: kaaaa.when(
                       loading: () => Text("Saving..."),

@@ -12,10 +12,16 @@ final todoProvider = StateNotifierProvider<TodoModel, TodoState>((ref) {
   return TodoModel(supabaseDB: dataStore);
 });
 
+final lengthAndCoinProvider = FutureProvider.autoDispose((ref) async {
+  final data = await ref.watch(todoProvider.notifier).checkTodoLengthAndCoins();
+  return data;
+});
+
 //--
 class TodoModel extends StateNotifier<TodoState> {
   TodoModel({required this.supabaseDB}) : super(TodoState.loading()) {
     loadTodoInfo();
+    checkTodoLengthAndCoins();
   }
 
   final SupabaseDB supabaseDB;
@@ -36,11 +42,18 @@ class TodoModel extends StateNotifier<TodoState> {
     }
   }
 
+  bool isListFull = true;
+  int coins = -1;
+
+  checkTodoLengthAndCoins() async {
+    isListFull = await checkLengthOfTodo();
+    coins = await getRemainingCoins();
+    print("checkTodoLengthAndCoins()checkTodoLengthAndCoins():: $coins");
+  }
+
   Future<bool> addTodo(
       {String? title, String? description, String? timeToNotify}) async {
     state = TodoState.loading();
-    final isListFull = await checkLengthOfTodo();
-    final coins = await getRemainingCoins();
 
     if (title == '') {
       state = TodoState.error("Title can't be empty");

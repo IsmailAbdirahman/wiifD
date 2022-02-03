@@ -7,7 +7,9 @@ import 'package:wiifd/screens/settings/settings_model.dart';
 import 'package:wiifd/screens/todo_screen/todo_model.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 import 'package:wiifd/widgets/delete_alert.dart';
+import 'package:wiifd/widgets/shimmer_widget.dart';
 import 'package:wiifd/widgets/todo_info_tile.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TodoInfoScreen extends ConsumerStatefulWidget {
   @override
@@ -155,9 +157,7 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
                 ),
                 Expanded(
                   child: todoDataa.when(
-                      loading: () => Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                      loading: () => KShimmer(),
                       data: (data) => ListView.builder(
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {

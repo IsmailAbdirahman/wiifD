@@ -33,6 +33,7 @@ dependencies:
   purchases_flutter: ^3.9.3
   shimmer: ^2.0.0
   awesome_notifications: ^0.6.21
+  url_launcher: ^6.0.18
 
 
 dev_dependencies:

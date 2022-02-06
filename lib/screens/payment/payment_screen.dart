@@ -67,15 +67,39 @@ class PayWallScreen extends StatelessWidget {
     final product = package!.product;
 
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0),
+      padding: const EdgeInsets.only(left: 18.0, right: 18),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ListTile(
-            title: Text("Title: ${product.title}"),
-            subtitle: Text("Description: ${product.description}"),
-            trailing: Text("Price: ${product.priceString}"),
-            onTap: () => onClickedPackage(package!),
+          SizedBox(
+            height: 30,
+          ),
+          Container(
+            height: MediaQuery.of(context).size.height * 0.4,
+            decoration: BoxDecoration(
+              color: Color(0XFF410882),
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(40),
+                  bottomLeft: Radius.circular(40)),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 38.0),
+              child: ListTile(
+                title: Text(
+                  "Get 50 Coins",
+                  style: TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.w800),
+                ),
+                subtitle: Text(
+                    "Exchange your laziness and procrastination with motivation",
+                    style: TextStyle(
+                        color: Colors.white70, fontWeight: FontWeight.w600)),
+                trailing: Text(product.priceString,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w800)),
+                onTap: () => onClickedPackage(package!),
+              ),
+            ),
           ),
         ],
       ),

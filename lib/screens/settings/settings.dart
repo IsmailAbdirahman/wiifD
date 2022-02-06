@@ -26,10 +26,12 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
 
     // final stateInfo = ref.watch(userInfoAsync);
     settingP.when(
-        loaded: (data) =>
-        nameController = TextEditingController(text: data.name),
-        error: (e) => nameController = TextEditingController(text:'Name is '),
-        initializing: () => nameController = TextEditingController(text:'Wait'),);
+      loaded: (data) => nameController = TextEditingController(text: data.name),
+      error: (e) =>
+          nameController = TextEditingController(text: 'something went wrong'),
+      initializing: () =>
+          nameController = TextEditingController(text: 'Updating...'),
+    );
 
     return SafeArea(
       child: Scaffold(
@@ -43,7 +45,7 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
           centerTitle: true,
           backgroundColor: AppColor().backgroundColor,
         ),
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         body: Column(
           children: [
             Padding(
@@ -59,11 +61,11 @@ class SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
             ElevatedButton(
                 style:
-                ElevatedButton.styleFrom(primary: AppColor().primaryColor),
+                    ElevatedButton.styleFrom(primary: AppColor().primaryColor),
                 onPressed: () async {
                   final model = ref.read(settingsProvider.notifier);
                   final success =
-                  await model.updateName(nameController!.value.text);
+                      await model.updateName(nameController!.value.text);
                   if (success) {
                     FocusManager.instance.primaryFocus?.unfocus();
                   } else {

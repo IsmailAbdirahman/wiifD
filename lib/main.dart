@@ -24,11 +24,11 @@ enum Entitlement { free, pro }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  initPlatformState();
-  await PaymentSource().initKey();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await PaymentSource().initKey();
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white,
   ));

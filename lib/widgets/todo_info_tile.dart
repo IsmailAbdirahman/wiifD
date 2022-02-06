@@ -11,8 +11,9 @@ class TodoInfoTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final timeConverter =
-        ref.watch(todoProvider.notifier).timeToNotifyConverter(todoInfo!.notifyTime!);
+    final timeConverter = ref
+        .watch(todoProvider.notifier)
+        .timeToNotifyConverter(todoInfo!.notifyTime!);
     return LayoutBuilder(builder: (_, constraints) {
       final heightC = constraints.biggest.height;
       final widthC = constraints.biggest.width;
@@ -52,7 +53,7 @@ class TodoInfoTile extends ConsumerWidget {
                   ),
                   title: Text(
                     todoInfo!.title!,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 16),
+                    style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                   subtitle: Align(
                     alignment: Alignment.topLeft,
@@ -85,9 +86,9 @@ class TodoInfoTile extends ConsumerWidget {
                             "${todoInfo!.description}",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Colors.grey[900],
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14),
+                              color: Colors.grey[900],
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ],

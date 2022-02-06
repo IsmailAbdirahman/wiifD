@@ -228,22 +228,21 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                             borderRadius: BorderRadius.circular(10)),
                         primary: AppColor().primaryColor),
                     onPressed: () async {
-
                       final success = await ref
                           .read(todoProvider.notifier)
                           .addTodo(
                               title: _titleController.text,
                               description: _descriptionController.text,
                               timeToNotify: currentTime);
-                      logger.wtf(
-                          "----------------- $success------------------");
+                      logger
+                          .wtf("----------------- $success------------------");
                       if (success) {
                         _titleController.clear();
                         _descriptionController.clear();
                         ref.refresh(settingsProvider);
                         Navigator.pop(context);
                       }
-                     ref.refresh(todoProvider);
+                      ref.refresh(todoProvider);
                     },
                     child: kaaaa.when(
                       loading: () => Text("Saving..."),

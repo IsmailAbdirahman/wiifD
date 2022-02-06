@@ -48,11 +48,9 @@ class TodoModel extends StateNotifier<TodoState> {
   checkTodoLengthAndCoins() async {
     isListFull = await checkLengthOfTodo();
     coins = await getRemainingCoins();
-    print("checkTodoLengthAndCoins()checkTodoLengthAndCoins():: $coins");
   }
 
-  Future<bool> addTodo(
-      {String? title, String? description, String? timeToNotify}) async {
+  bool checkTodoInput(String title) {
     state = TodoState.loading();
 
     if (title == '') {
@@ -71,38 +69,46 @@ class TodoModel extends StateNotifier<TodoState> {
           "You wasted all your coins, get new coins and waste again!");
       return false;
     }
+    return true;
+  }
 
-    int coinForThisTodo = 10;
-    int remainingCoins = coins - coinForThisTodo;
-    int createdAt = DateTime.now().millisecondsSinceEpoch;
-    int deleteAt =
-        DateTime.now().add(Duration(minutes: 15)).millisecondsSinceEpoch;
+  Future<bool> addTodo(
+      {String? title, String? description, String? timeToNotify}) async {
+    state = TodoState.loading();
+    if (checkTodoInput(title!)) {
+      int coinForThisTodo = 10;
+      int remainingCoins = coins - coinForThisTodo;
+      int createdAt = DateTime.now().millisecondsSinceEpoch;
+      int deleteAt =
+          DateTime.now().add(Duration(minutes: 15)).millisecondsSinceEpoch;
 
-    int notifyTime = toSinceEpoch(timeToNotify ?? null);
+      int notifyTime = toSinceEpoch(timeToNotify ?? null);
 
-    FirebaseAuth auth = FirebaseAuth.instance;
-    String userUID = auth.currentUser!.uid;
-    TodoInfo todoInfo = TodoInfo(
-        userUID: userUID,
-        id: uuid.v1(),
-        title: title,
-        description: description,
-        availableCoins: coinForThisTodo,
-        notifyTime: notifyTime,
-        createdAt: createdAt,
-        deleteAt: deleteAt);
+      FirebaseAuth auth = FirebaseAuth.instance;
+      String userUID = auth.currentUser!.uid;
+      TodoInfo todoInfo = TodoInfo(
+          userUID: userUID,
+          id: uuid.v1(),
+          title: title,
+          description: description,
+          availableCoins: coinForThisTodo,
+          notifyTime: notifyTime,
+          createdAt: createdAt,
+          deleteAt: deleteAt);
 
-    try {
-      final data = todoInfo;
-      //state = TodoState.loading();
-      await supabaseDB.addTodoInfo(data);
-      await supabaseDB.updateCoins(remainingCoins);
-      supabaseDB.loadTodoData().then((value) {
-        state = TodoState.data(value);
-      });
-      return true;
-    } catch (e) {
-      throw (e);
+      try {
+        final data = todoInfo;
+        await supabaseDB.addTodoInfo(data);
+        await supabaseDB.updateCoins(remainingCoins);
+        supabaseDB.loadTodoData().then((value) {
+          state = TodoState.data(value);
+        });
+        return true;
+      } catch (e) {
+        throw (e);
+      }
+    } else {
+      return false;
     }
   }
 

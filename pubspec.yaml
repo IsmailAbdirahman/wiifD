@@ -32,6 +32,7 @@ dependencies:
   firebase_auth_mocks: ^0.8.2
   purchases_flutter: ^3.9.3
   shimmer: ^2.0.0
+  awesome_notifications: ^0.6.21
 
 
 dev_dependencies:

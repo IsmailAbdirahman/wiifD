@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,9 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:uuid/uuid.dart';
 import 'package:wiifd/app_state/settings_state.dart';
 import 'package:wiifd/data_source/payment_source.dart';
+import 'package:wiifd/screens/todo_screen/todo_info.dart';
 import 'package:wiifd/utilties/app_colors.dart';
+import 'package:wiifd/utilties/notification_service.dart';
 import 'package:wiifd/widgets/button_nav.dart';
 import 'screens/payment/payment_screen.dart';
 import 'screens/settings/settings.dart';
@@ -18,7 +21,7 @@ import 'screens/signing_screen/sign_in_screen.dart';
 import 'firebase_options.dart';
 
 var logger = Logger();
-var uuid = Uuid();
+//var uuid = Uuid();
 
 enum Entitlement { free, pro }
 
@@ -27,6 +30,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationService().init();
   await PaymentSource().initKey();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -48,7 +52,24 @@ Future<void> initPlatformState() async {
 //   ),
 // );
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().actionStream.listen((receivedNotification) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => TodoInfoScreen()),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

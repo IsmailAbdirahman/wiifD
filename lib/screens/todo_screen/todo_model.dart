@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,11 +7,13 @@ import 'package:wiifd/app_state/settings_state.dart';
 import 'package:wiifd/app_state/todo_state.dart';
 import 'package:wiifd/data_model/todo_info_model.dart';
 import 'package:wiifd/data_source/supabase_db.dart';
+import 'package:wiifd/utilties/notification_service.dart';
 import '../../main.dart';
 
 final todoProvider = StateNotifierProvider<TodoModel, TodoState>((ref) {
   final dataStore = ref.watch(supabaseProvider);
-  return TodoModel(supabaseDB: dataStore);
+  final notification = ref.watch(notificationProvider);
+  return TodoModel(supabaseDB: dataStore, notificationService: notification);
 });
 
 final lengthAndCoinProvider = FutureProvider.autoDispose((ref) async {
@@ -19,12 +23,14 @@ final lengthAndCoinProvider = FutureProvider.autoDispose((ref) async {
 
 //--
 class TodoModel extends StateNotifier<TodoState> {
-  TodoModel({required this.supabaseDB}) : super(TodoState.loading()) {
+  TodoModel({required this.supabaseDB, required this.notificationService})
+      : super(TodoState.loading()) {
     loadTodoInfo();
     checkTodoLengthAndCoins();
   }
 
   final SupabaseDB supabaseDB;
+  final NotificationService notificationService;
 
   Future<int> getRemainingCoins() async {
     final coins = await supabaseDB.loadProfileInfo();
@@ -88,7 +94,7 @@ class TodoModel extends StateNotifier<TodoState> {
       String userUID = auth.currentUser!.uid;
       TodoInfo todoInfo = TodoInfo(
           userUID: userUID,
-          id: uuid.v1(),
+          id: Random().nextInt(100).toString(),
           title: title,
           description: description,
           availableCoins: coinForThisTodo,
@@ -100,12 +106,15 @@ class TodoModel extends StateNotifier<TodoState> {
         final data = todoInfo;
         await supabaseDB.addTodoInfo(data);
         await supabaseDB.updateCoins(remainingCoins);
+        await notifyBeforeDeleting(data);
         supabaseDB.loadTodoData().then((value) {
           state = TodoState.data(value);
         });
         return true;
       } catch (e) {
-        throw (e);
+        logger.e(e);
+
+        return false;
       }
     } else {
       return false;
@@ -125,6 +134,7 @@ class TodoModel extends StateNotifier<TodoState> {
         state = TodoState.error('Something Went Wrong');
       }
     }
+    notificationService.deleteNotificationID(int.parse(id!));
   }
 
   Future<bool> deleteLateTodo(int index) async {
@@ -142,6 +152,10 @@ class TodoModel extends StateNotifier<TodoState> {
     final data = await supabaseDB.loadTodoData();
     state = TodoState.data(data);
     return data;
+  }
+
+  notifyBeforeDeleting(TodoInfo todoInfo) async {
+    await notificationService.notifyBeforeDeleting(todoInfo);
   }
 
 //--------Time Converter------

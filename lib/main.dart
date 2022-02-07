@@ -30,7 +30,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await NotificationService().init();
+   NotificationService().init();
   await PaymentSource().initKey();
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

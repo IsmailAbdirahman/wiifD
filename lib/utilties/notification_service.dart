@@ -11,13 +11,13 @@ final notificationProvider = Provider((ref) => NotificationService());
 class NotificationService {
   init() {
     AwesomeNotifications().initialize(
-        null,
+        'resource://drawable/res_app_icon',
         [
           NotificationChannel(
-              channelGroupKey: 'Today TodoList',
+              channelGroupKey: 'Todo',
               channelKey: 'key1',
-              channelName: 'Basic notifications',
-              channelDescription: 'Notification channel for basic tests',
+              channelName: 'Notifications',
+              channelDescription: 'Notification channel for Todo app',
               defaultColor: Color(0xFF9D50DD),
               ledColor: Colors.white)
         ],
@@ -37,7 +37,7 @@ class NotificationService {
         content: NotificationContent(
             id: int.parse(todoInfo.id!),
             channelKey: 'key1',
-            title: ": ${todoInfo.title}",
+            title: "Did you do this task '${todoInfo.title}'",
             summary: todoInfo.description),
         schedule: NotificationCalendar(
           allowWhileIdle: true,
@@ -48,7 +48,6 @@ class NotificationService {
           timeZone: timeZone,
         ));
   }
-
 
   Future deleteNotificationID(int id) async {
     await AwesomeNotifications().cancel(id);

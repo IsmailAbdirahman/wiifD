@@ -11,3 +11,6 @@ SupabaseClient client = SupabaseClient(supabaseUrl, supabaseKey);
 const String clientId =
     '928487410803-3esluc2plbtqav6aaa7c7bm7e92gd5go.apps.googleusercontent.com';
 String userUID = FirebaseAuth.instance.currentUser!.uid;
+
+//RevenueCat API
+const paymentAPIkey = 'goog_lfWQhaHxLGYrxrySNKCNlHLQKaa';

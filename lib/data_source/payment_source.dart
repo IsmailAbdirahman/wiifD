@@ -1,16 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:wiifd/utilties/app_config.dart';
 
 import '../main.dart';
 
 final paymentProvider = Provider((ref) => PaymentSource());
 
 class PaymentSource {
-  static const apikey = 'goog_lfWQhaHxLGYrxrySNKCNlHLQKaa';
-
   Future<void> initKey() async {
     await Purchases.setDebugLogsEnabled(true);
-    await Purchases.setup(apikey);
+    await Purchases.setup(paymentAPIkey);
   }
 
   checkActiveSubscriptions() {

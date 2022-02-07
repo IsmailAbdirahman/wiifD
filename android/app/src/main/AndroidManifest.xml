@@ -21,7 +21,7 @@
     </queries>
 
    <application
-        android:label="wiifd"
+        android:label="ScrollZero"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

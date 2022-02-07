@@ -105,8 +105,9 @@ class TodoModel extends StateNotifier<TodoState> {
       try {
         final data = todoInfo;
         await supabaseDB.addTodoInfo(data);
-        await supabaseDB.updateCoins(remainingCoins);
         await notifyBeforeDeleting(data);
+        await supabaseDB.updateCoins(remainingCoins);
+
         supabaseDB.loadTodoData().then((value) {
           state = TodoState.data(value);
         });

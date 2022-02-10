@@ -56,7 +56,8 @@ class TodoModel extends StateNotifier<TodoState> {
     coins = await getRemainingCoins();
   }
 
-  bool checkTodoInput(String title) {
+  Future<bool> checkTodoInput(String title) async {
+    await checkTodoLengthAndCoins();
     state = TodoState.loading();
 
     if (title == '') {
@@ -81,7 +82,7 @@ class TodoModel extends StateNotifier<TodoState> {
   Future<bool> addTodo(
       {String? title, String? description, String? timeToNotify}) async {
     state = TodoState.loading();
-    if (checkTodoInput(title!)) {
+    if (await checkTodoInput(title!)) {
       int coinForThisTodo = 10;
       int remainingCoins = coins - coinForThisTodo;
       int createdAt = DateTime.now().millisecondsSinceEpoch;

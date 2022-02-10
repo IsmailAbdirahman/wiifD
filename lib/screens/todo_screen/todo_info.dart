@@ -85,7 +85,7 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
                                 loaded: (data) => Text(
                                       data.availableCoins.toString(),
                                       style: TextStyle(
-                                          color: AppColor().primaryColor,
+                                          color: data.availableCoins ==0?Colors.red:AppColor().primaryColor,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12),
                                     ),

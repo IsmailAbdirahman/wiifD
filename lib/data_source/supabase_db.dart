@@ -99,6 +99,7 @@ class SupabaseDB {
         .eq("userUID", userUID)
         .execute();
     if (res.error != null) {
+      logger.e(res.error);
       throw ("something went wrong");
     }
     List<dynamic> dynamicData = res.data;

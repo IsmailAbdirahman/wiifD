@@ -44,10 +44,6 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final futureData = ref.watch(lengthAndCoinProvider);
-
-    final listLength = ref.watch(todoProvider.notifier).isListFull;
-    final coins = ref.watch(todoProvider.notifier).coins;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
@@ -85,6 +81,7 @@ class _ButtonNavWidgetState extends ConsumerState<ButtonNavWidget> {
             ),
             backgroundColor: AppColor().primaryColor,
             onPressed: () {
+              final coins = ref.read(todoProvider.notifier).coins;
               if (coins == 0) {
                 Navigator.push(
                   context,
@@ -242,7 +239,7 @@ class _ConsumerTodoAlertDiState extends ConsumerState<TodoAlertDi> {
                         ref.refresh(settingsProvider);
                         Navigator.pop(context);
                       }
-                      ref.refresh(todoProvider);
+                      // ref.refresh(todoProvider);
                     },
                     child: kaaaa.when(
                       loading: () => Text("Saving..."),

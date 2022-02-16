@@ -10,6 +10,7 @@ import 'package:wiifd/screens/todo_screen/todo_info.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 import 'package:wiifd/utilties/notification_service.dart';
 
+import 'screens/intro_screen/intro_screen.dart';
 import 'screens/signing_screen/sign_in_screen.dart';
 import 'firebase_options.dart';
 
@@ -67,7 +68,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: AppColor().createMaterialColor(Color(0XFF21135D)),
       ),
-      home: LoginScreen(),
+      home: IntroScreen(),
     );
   }
 }

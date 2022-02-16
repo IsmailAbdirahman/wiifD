@@ -40,7 +40,7 @@ class _ConsumerTodoAlertDiState extends ConsumerState<DeleteAlert> {
               children: [
                 Center(
                   child: Container(
-                      height: 190, child: Image.asset('assets/images/th.gif')),
+                      height: 190, child: Image.asset('assets/images/delete.gif')),
                 ),
                 Center(
                   child: Text(

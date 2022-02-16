@@ -18,15 +18,16 @@ class LoginScreen extends ConsumerWidget {
             return Column(
               children: [
                 SizedBox(
-                  height: 210,
+                  height: 100,
                 ),
                 AspectRatio(
                     aspectRatio: 2,
-                    child: Image(image: AssetImage("assets/images/todo.png"))),
+                    child:
+                        Image(image: AssetImage("assets/images/loginp.png"))),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Welcome to WiiFD",
+                    "Welcome to ScrollZero",
                     style: TextStyle(
                         fontWeight: FontWeight.w800,
                         wordSpacing: 2,
@@ -38,9 +39,7 @@ class LoginScreen extends ConsumerWidget {
                   child: SignInScreen(
                     showAuthActionSwitch: false,
                     providerConfigs: [
-                      GoogleProviderConfiguration(
-                          clientId:
-                              clientId)
+                      GoogleProviderConfiguration(clientId: clientId)
                     ],
                   ),
                 ),

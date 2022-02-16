@@ -5,12 +5,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterfire_ui/i10n.dart';
 import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wiifd/data_source/payment_source.dart';
 import 'package:wiifd/screens/todo_screen/todo_info.dart';
 import 'package:wiifd/utilties/app_colors.dart';
 import 'package:wiifd/utilties/notification_service.dart';
 
 import 'screens/intro_screen/intro_screen.dart';
+import 'screens/intro_screen/intro_screen_model.dart';
 import 'screens/signing_screen/sign_in_screen.dart';
 import 'firebase_options.dart';
 
@@ -27,8 +29,11 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.white,
   ));
+  final sharedPref = await SharedPreferences.getInstance();
 
-  runApp(ProviderScope(child: MyApp()));
+  runApp(ProviderScope(
+      overrides: [sharedPreferencesProvider.overrideWithValue(sharedPref)],
+      child: MyApp()));
 }
 
 // void main() => runApp(
@@ -68,7 +73,16 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: AppColor().createMaterialColor(Color(0XFF21135D)),
       ),
-      home: IntroScreen(),
+      home: Consumer(
+        builder: (_, WidgetRef ref, __) {
+          final info = ref.watch(introScreenProvider.notifier);
+          if (info.getStatus()) {
+            return LoginScreen();
+          } else {
+            return IntroScreen();
+          }
+        },
+      ),
     );
   }
 }

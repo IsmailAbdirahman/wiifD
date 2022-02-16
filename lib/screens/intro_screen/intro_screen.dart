@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:wiifd/main.dart';
+import 'package:wiifd/screens/intro_screen/intro_screen_model.dart';
 import 'package:wiifd/screens/signing_screen/sign_in_screen.dart';
 import 'package:wiifd/utilties/constants.dart';
 import 'package:wiifd/widgets/build_intro_image.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class IntroScreen extends StatelessWidget {
-  void _onIntroEnd(context) {
+class IntroScreen extends ConsumerWidget {
+  void _onIntroEnd(context, [WidgetRef? ref]) async {
+    ref!.read(introScreenProvider.notifier).saveStatus();
+
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => LoginScreen()),
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const bodyStyle = TextStyle(fontSize: 19.0);
 
     const pageDecoration = const PageDecoration(
@@ -46,8 +51,8 @@ class IntroScreen extends StatelessWidget {
           decoration: pageDecoration,
         ),
       ],
-      onDone: () => _onIntroEnd(context),
-      onSkip: () => _onIntroEnd(context),
+      onDone: () => _onIntroEnd(context, ref),
+      onSkip: () => _onIntroEnd(context, ref),
       // You can override onSkip callback
       showSkipButton: true,
       skipOrBackFlex: 0,
@@ -58,7 +63,7 @@ class IntroScreen extends StatelessWidget {
       next: const SizedBox.shrink(),
       done: const Text('Done', style: TextStyle(fontWeight: FontWeight.w600)),
       curve: Curves.fastLinearToSlowEaseIn,
-    //  controlsMargin: const EdgeInsets.all(16),
+      //  controlsMargin: const EdgeInsets.all(16),
       //controlsPadding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
       dotsDecorator: const DotsDecorator(
         size: Size(10.0, 10.0),

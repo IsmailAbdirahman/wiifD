@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:new_version/new_version.dart';
-import 'package:wiifd/data_model/todo_info_model.dart';
-import 'package:wiifd/main.dart';
 import 'package:wiifd/screens/payment/payment_screen.dart';
 import 'package:wiifd/screens/settings/settings_model.dart';
 import 'package:wiifd/screens/todo_screen/todo_model.dart';
@@ -18,43 +15,8 @@ class TodoInfoScreen extends ConsumerStatefulWidget {
 }
 
 class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
-  @override
-  void initState() {
-    super.initState();
-    // Instantiate NewVersion manager object (Using GCP Console app as example)
-    final newVersion = NewVersion();
 
-    // You can let the plugin handle fetching the status and showing a dialog,
-    // or you can fetch the status and display your own dialog, or no dialog.
-    const simpleBehavior = false;
 
-    if (simpleBehavior) {
-      basicStatusCheck(newVersion);
-    } else {
-      advancedStatusCheck(newVersion);
-    }
-  }
-
-  basicStatusCheck(NewVersion newVersion) {
-    newVersion.showAlertIfNecessary(context: context);
-  }
-
-  advancedStatusCheck(NewVersion newVersion) async {
-    final status = await newVersion.getVersionStatus();
-    if (status != null) {
-      debugPrint("releaseNotes ::${status.releaseNotes}");
-      debugPrint("appStoreLink ::${status.appStoreLink}");
-      debugPrint("localVersion ::${status.localVersion}");
-      debugPrint("storeVersion ::${status.storeVersion}");
-      // debugPrint(status.canUpdate.toString());
-      newVersion.showUpdateDialog(
-        context: context,
-        versionStatus: status,
-        dialogTitle: 'New Update is available',
-        dialogText: 'Please update to get latest update',
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {

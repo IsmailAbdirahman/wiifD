@@ -22,9 +22,7 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
   void initState() {
     super.initState();
     // Instantiate NewVersion manager object (Using GCP Console app as example)
-    final newVersion = NewVersion(
-      androidId: 'wiif.dwiif.wiifd',
-    );
+    final newVersion = NewVersion();
 
     // You can let the plugin handle fetching the status and showing a dialog,
     // or you can fetch the status and display your own dialog, or no dialog.
@@ -37,9 +35,6 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
     }
   }
 
-
-
-
   basicStatusCheck(NewVersion newVersion) {
     newVersion.showAlertIfNecessary(context: context);
   }
@@ -47,11 +42,11 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
   advancedStatusCheck(NewVersion newVersion) async {
     final status = await newVersion.getVersionStatus();
     if (status != null) {
-      debugPrint(status.releaseNotes);
-      debugPrint(status.appStoreLink);
-      debugPrint(status.localVersion);
-      debugPrint(status.storeVersion);
-      debugPrint(status.canUpdate.toString());
+      debugPrint("releaseNotes ::${status.releaseNotes}");
+      debugPrint("appStoreLink ::${status.appStoreLink}");
+      debugPrint("localVersion ::${status.localVersion}");
+      debugPrint("storeVersion ::${status.storeVersion}");
+      // debugPrint(status.canUpdate.toString());
       newVersion.showUpdateDialog(
         context: context,
         versionStatus: status,
@@ -121,7 +116,9 @@ class _ConsumerTodoInfoScreenState extends ConsumerState<TodoInfoScreen> {
                                 loaded: (data) => Text(
                                       data.availableCoins.toString(),
                                       style: TextStyle(
-                                          color: data.availableCoins ==0?Colors.red:AppColor().primaryColor,
+                                          color: data.availableCoins == 0
+                                              ? Colors.red
+                                              : AppColor().primaryColor,
                                           fontWeight: FontWeight.w600,
                                           fontSize: 12),
                                     ),
